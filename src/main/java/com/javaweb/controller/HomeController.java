@@ -10,8 +10,8 @@ import java.io.IOException;
 @WebServlet("/")
 public class HomeController extends HttpServlet{
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        resp.getWriter().println("Hello World!");
+        request.getRequestDispatcher("/views/public/menu.jsp").forward(request, response);
     }
 }

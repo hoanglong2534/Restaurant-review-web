@@ -15,8 +15,7 @@
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
     <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100;200;3
-00;400;500;600;700;800;900&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
             rel="stylesheet">
 
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -38,19 +37,28 @@
             flex-direction: column;
         }
 
+        body {
+            margin-top: 20px;
+            background: #ebeef0;
+            min-height: 100vh;
+        }
+
         main.main {
-            flex: 1;
+            flex: 1 0 auto;
             padding-top: 80px;
+            padding-bottom: 50px;
+            position: relative;
+        }
+
+        footer {
+            flex-shrink: 0;
+            width: 100%;
+            position: static !important;
         }
 
         .header {
             background-color: rgba(0, 0, 0, 0.8);
             transition: background-color 0.3s ease;
-        }
-
-        body {
-            margin-top: 20px;
-            background: #ebeef0;
         }
 
         .img-sm {
@@ -59,7 +67,7 @@
         }
 
         .panel {
-            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.075 srcset="assets/img/portfolio/app-1.png 1x, assets/img/portfolio/app-1@2x.png 2x");
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.075);
             border-radius: 0;
             border: 0;
             margin-bottom: 15px;
@@ -90,12 +98,12 @@
         .media-block .media-body {
             display: block;
             overflow: hidden;
-            width: auto
+            width: auto;
         }
 
         .middle .media-left,
         .middle .media-body {
-            vertical-align: middle
+            vertical-align: middle;
         }
 
         .btn-sm,
@@ -105,6 +113,9 @@
 
         .mar-top {
             margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .hover-effect {
@@ -118,8 +129,15 @@
         }
 
         .btn-group {
-            display: inline-flex;
+            display: inline-flex !important;
             align-items: center;
+            visibility: visible !important;
+        }
+
+        .pad-ver {
+            padding: 10px 0;
+            display: block !important;
+            visibility: visible !important;
         }
 
         .like-button, .dislike-button {
@@ -151,6 +169,21 @@
         }
 
         .report-button:hover {
+            color: #dc3545;
+        }
+
+        .edit-button, .delete-button {
+            margin-left: 10px;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .edit-button:hover {
+            color: #007bff;
+        }
+
+        .delete-button:hover {
             color: #dc3545;
         }
 
@@ -194,6 +227,62 @@
             font-size: 1.2rem;
             font-weight: 600;
             color: Orange;
+        }
+
+        .attach-photo-btn {
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .attach-photo-btn:hover {
+            color: #007bff;
+        }
+
+        #photoInput {
+            display: none;
+        }
+
+        .photo-preview {
+            margin-top: 10px;
+            max-width: 200px;
+            max-height: 200px;
+            display: none;
+        }
+
+        .photo-preview img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .remove-photo {
+            cursor: pointer;
+            color: #dc3545;
+            margin-left: 10px;
+            font-size: 0.9rem;
+        }
+
+        .comment-image {
+            margin-top: 10px;
+            max-width: 200px;
+            max-height: 200px;
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .edit-textarea {
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .edit-actions {
+            margin-top: 10px;
+        }
+
+        #customAlertModal .modal-dialog {
+            max-width: 450px;
         }
     </style>
 </head>
@@ -260,18 +349,25 @@
                     </div>
                     <textarea class="form-control" rows="2"
                               placeholder="Bạn thấy món ăn này như thế nào? Chia sẻ cho mọi người cùng biết nhé!"></textarea>
-                    <div class="mar-top clearfix">
+                    <div class="mar-top">
+                        <label for="photoInput" class="attach-photo-btn">
+                            <i class="fas fa-paperclip"></i> Đính kèm ảnh
+                        </label>
+                        <input type="file" id="photoInput" accept="image/*">
                         <button class="btn btn-sm btn-primary pull-right" type="submit">
                             <i class="fa fa-pencil fa-fw"></i> Bình luận ngay
                         </button>
                     </div>
-
+                    <div class="photo-preview" id="photoPreview">
+                        <img id="previewImage" src="" alt="Photo Preview">
+                        <span class="remove-photo" id="removePhoto">Xóa</span>
+                    </div>
                 </div>
             </div>
 
             <div class="panel">
                 <div class="panel-body">
-                    <div class="media-block">
+                    <div class="media-block" data-comment-id="1" data-is-own="true">
                         <a class="media-left" href="#"><img class="img-circle img-sm"
                                                             src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Profile Picture"></a>
                         <div class="media-body">
@@ -279,7 +375,7 @@
                                 <a href="#" class="btn-link text-semibold media-heading box-inline"
                                    style="text-decoration: none;">Nguyễn Văn A</a>
                             </div>
-                            <p>consectetuer adipiscing elit, sed diam nonummy nibh...</p>
+                            <p class="comment-text">consectetuer adipiscing elit, sed diam nonummy nibh...</p>
                             <div class="pad-ver">
                                 <div class="btn-group">
                                     <span class="like-button" data-liked="false"><i class="fa fa-thumbs-up"></i></span>
@@ -288,11 +384,13 @@
                                     <span class="dislike-count">0</span>
                                     <a href="#" class="btn btn-sm btn-default btn-hover-primary reply-button">Phản hồi</a>
                                     <span class="report-button" data-bs-toggle="modal" data-bs-target="#reportModal"><i class="fa fa-flag"></i> Báo cáo</span>
+                                    <span class="edit-button"><i class="fa fa-edit"></i> Sửa</span>
+                                    <span class="delete-button"><i class="fa fa-trash"></i> Xóa</span>
                                 </div>
                             </div>
                             <hr>
 
-                            <div class="media-block">
+                            <div class="media-block" data-comment-id="2" data-is-own="false">
                                 <a class="media-left" href="#"><img class="img-circle img-sm"
                                                                     src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Profile Picture"></a>
                                 <div class="media-body">
@@ -300,7 +398,32 @@
                                         <a href="#" class="btn-link text-semibold media-heading box-inline"
                                            style="text-decoration: none;">Nguyễn Thị B</a>
                                     </div>
-                                    <p>Sed diam nonummy nibh euismod tincidunt...</p>
+                                    <p class="comment-text">Sed diam nonummy nibh euismod tincidunt...</p>
+                                    <div class="pad-ver">
+                                        <div class="btn-group">
+                                            <span class="like-button" data-liked="false"><i class="fa fa-thumbs-up"></i></span>
+                                            <span class="like-count">0</span>
+                                            <span class="dislike-button" data-disliked="false"><i class="fa fa-thumbs-down"></i></span>
+                                            <span class="dislike-count">0</span>
+                                            <a href="#" class="btn btn-sm btn-default btn-hover-primary reply-button">Phản hồi</a>
+                                            <span class="report-button" data-bs-toggle="modal" data-bs-target="#reportModal"><i class="fa fa-flag"></i> Báo cáo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="media-block" data-comment-id="3" data-is-own="false">
+                                <a class="media-left" href="#"><img class="img-circle img-sm"
+                                                                    src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Profile Picture"></a>
+                                <div class="media-body">
+                                    <div class="mar-btm">
+                                        <a href="#" class="btn-link text-semibold media-heading box-inline"
+                                           style="text-decoration: none;">Nguyễn Văn C</a>
+                                    </div>
+                                    <p class="comment-text">Món súp này nhìn ngon quá, mình vừa thử làm ở nhà, đây là thành quả!</p>
+                                    <img class="comment-image" src="./assets/img/about-2.jpg" alt="Nguyen Van C's Soup">
                                     <div class="pad-ver">
                                         <div class="btn-group">
                                             <span class="like-button" data-liked="false"><i class="fa fa-thumbs-up"></i></span>
@@ -331,6 +454,16 @@
     <div class="reply-box mt-2">
         <textarea class="form-control mb-2" rows="2" placeholder="Viết phản hồi..."></textarea>
         <button class="btn btn-sm btn-primary">Gửi phản hồi</button>
+    </div>
+</template>
+
+<template id="edit-template">
+    <div class="edit-box mt-2">
+        <textarea class="form-control edit-textarea" rows="2"></textarea>
+        <div class="edit-actions">
+            <button class="btn btn-sm btn-primary save-edit">Lưu</button>
+            <button class="btn btn-sm btn-secondary cancel-edit">Hủy</button>
+        </div>
     </div>
 </template>
 
@@ -387,19 +520,22 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const template = document.querySelector("#reply-template").innerHTML;
+        const replyTemplate = document.querySelector("#reply-template").innerHTML;
+        const editTemplate = document.querySelector("#edit-template").innerHTML;
 
+        // Handle reply button
         document.querySelectorAll(".reply-button").forEach(button => {
             button.addEventListener("click", function (e) {
                 e.preventDefault();
                 document.querySelectorAll(".reply-box").forEach(el => el.remove());
                 const parent = this.closest(".media-body");
                 const box = document.createElement("div");
-                box.innerHTML = template;
+                box.innerHTML = replyTemplate;
                 parent.appendChild(box);
             });
         });
 
+        // Handle like/dislike buttons
         document.querySelectorAll(".btn-group").forEach(group => {
             const likeButton = group.querySelector(".like-button");
             const dislikeButton = group.querySelector(".dislike-button");
@@ -455,6 +591,7 @@
             });
         });
 
+        // Handle report functionality
         const reportReasons = document.querySelectorAll('input[name="reportReason"]');
         const otherReasonTextarea = document.getElementById("otherReasonTextarea");
 
@@ -496,6 +633,7 @@
             document.querySelector('input[name="reportReason"]:checked').checked = false;
         });
 
+        // Handle star rating
         const starRating = document.querySelector(".star-rating");
         const stars = starRating.querySelectorAll(".star");
 
@@ -536,6 +674,84 @@
                         s.classList.remove("filled");
                     }
                 });
+            });
+        });
+
+        // Handle photo attachment
+        const photoInput = document.getElementById("photoInput");
+        const photoPreview = document.getElementById("photoPreview");
+        const previewImage = document.getElementById("previewImage");
+        const removePhoto = document.getElementById("removePhoto");
+
+        photoInput.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                    photoPreview.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        removePhoto.addEventListener("click", function () {
+            photoPreview.style.display = "none";
+            previewImage.src = "";
+            photoInput.value = "";
+        });
+
+        // Handle edit and delete buttons
+        document.querySelectorAll(".media-block").forEach(comment => {
+            const isOwnComment = comment.getAttribute("data-is-own") === "true";
+            if (!isOwnComment) return;
+
+            const editButton = comment.querySelector(".edit-button");
+            const deleteButton = comment.querySelector(".delete-button");
+            const commentText = comment.querySelector(".comment-text");
+            const commentImage = comment.querySelector(".comment-image");
+
+            // Handle edit
+            editButton.addEventListener("click", function () {
+                document.querySelectorAll(".edit-box").forEach(el => el.remove());
+
+                const parent = commentText.parentElement;
+                const editBox = document.createElement("div");
+                editBox.innerHTML = editTemplate;
+                parent.insertBefore(editBox, commentText.nextSibling);
+
+                const textarea = editBox.querySelector(".edit-textarea");
+                textarea.value = commentText.textContent;
+
+                const saveButton = editBox.querySelector(".save-edit");
+                const cancelButton = editBox.querySelector(".cancel-edit");
+
+                saveButton.addEventListener("click", function () {
+                    const newText = textarea.value.trim();
+                    if (newText) {
+                        commentText.textContent = newText;
+                        editBox.remove();
+                    }
+                });
+
+                cancelButton.addEventListener("click", function () {
+                    editBox.remove();
+                });
+            });
+
+            // Handle delete
+            deleteButton.addEventListener("click", function () {
+                const customAlertModal = new bootstrap.Modal(document.getElementById("customAlertModal"));
+                const customAlertMessage = document.getElementById("customAlertMessage");
+
+                customAlertMessage.textContent = "Bạn có chắc chắn muốn xóa bình luận này?";
+                customAlertModal.show();
+
+                const confirmButton = document.querySelector("#customAlertModal .btn-primary");
+                confirmButton.addEventListener("click", function () {
+                    comment.remove();
+                    customAlertModal.hide();
+                }, { once: true });
             });
         });
     });

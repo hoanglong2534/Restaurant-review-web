@@ -10,24 +10,21 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 
-    <!-- Favicons -->
     <link href="assets/img/favicon2.png" rel="icon">
 
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
     <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100;200;3
+00;400;500;600;700;800;900&display=swap"
             rel="stylesheet">
 
-    <!-- Vendor CSS Files -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="assets/vendor/aos/aos.css" rel="stylesheet">
     <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-    <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -62,7 +59,7 @@
         }
 
         .panel {
-            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.075);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.075 srcset="assets/img/portfolio/app-1.png 1x, assets/img/portfolio/app-1@2x.png 2x");
             border-radius: 0;
             border: 0;
             margin-bottom: 15px;
@@ -146,8 +143,57 @@
             margin-left: 10px;
         }
 
+        .report-button {
+            margin-left: 10px;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .report-button:hover {
+            color: #dc3545;
+        }
+
         .btn-hover-primary:hover {
             color: red;
+        }
+
+        #otherReasonTextarea {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .star-rating {
+            display: inline-block;
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+
+        .star-rating .star {
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .star-rating .star.filled {
+            color: #f39c12;
+        }
+
+        .star-rating .star:hover,
+        .star-rating .star:hover ~ .star {
+            color: #f1c40f;
+        }
+
+        .rating-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rating-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: Orange;
         }
     </style>
 </head>
@@ -163,8 +209,8 @@
             <ul>
                 <li><a href="">Trang chủ</a></li>
                 <li><a href="">Giới thiệu</a></li>
-                <li><a href="/" class="active">Thực đơn</a></li>
-                <li><a href="/login">Đăng nhập</a></li>
+                <li><a href="#portfolio" class="active">Menu</a></li>
+                <li><a href="#contact">Đăng nhập</a></li>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -173,7 +219,6 @@
 
 <main class="main">
 
-    <!-- Product section -->
     <section class="py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
@@ -199,12 +244,20 @@
         </div>
     </section>
 
-    <!-- Review Section -->
     <div class="container bootdey">
         <div class="col-md-12 bootstrap snippets">
-            <!-- Nhập bình luận chính -->
             <div class="panel">
                 <div class="panel-body">
+                    <div class="rating-wrapper">
+                        <span class="rating-label">Đánh giá món ăn:</span>
+                        <div class="star-rating" data-rating="0">
+                            <span class="star" data-value="1"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="2"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="3"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="4"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="5"><i class="fas fa-star"></i></span>
+                        </div>
+                    </div>
                     <textarea class="form-control" rows="2"
                               placeholder="Bạn thấy món ăn này như thế nào? Chia sẻ cho mọi người cùng biết nhé!"></textarea>
                     <div class="mar-top clearfix">
@@ -212,10 +265,10 @@
                             <i class="fa fa-pencil fa-fw"></i> Bình luận ngay
                         </button>
                     </div>
+
                 </div>
             </div>
 
-            <!-- Một bình luận -->
             <div class="panel">
                 <div class="panel-body">
                     <div class="media-block">
@@ -226,7 +279,7 @@
                                 <a href="#" class="btn-link text-semibold media-heading box-inline"
                                    style="text-decoration: none;">Nguyễn Văn A</a>
                             </div>
-                            <p>Món ăn rất ngon!</p>
+                            <p>consectetuer adipiscing elit, sed diam nonummy nibh...</p>
                             <div class="pad-ver">
                                 <div class="btn-group">
                                     <span class="like-button" data-liked="false"><i class="fa fa-thumbs-up"></i></span>
@@ -234,11 +287,11 @@
                                     <span class="dislike-button" data-disliked="false"><i class="fa fa-thumbs-down"></i></span>
                                     <span class="dislike-count">0</span>
                                     <a href="#" class="btn btn-sm btn-default btn-hover-primary reply-button">Phản hồi</a>
+                                    <span class="report-button" data-bs-toggle="modal" data-bs-target="#reportModal"><i class="fa fa-flag"></i> Báo cáo</span>
                                 </div>
                             </div>
                             <hr>
 
-                            <!-- Một phản hồi con -->
                             <div class="media-block">
                                 <a class="media-left" href="#"><img class="img-circle img-sm"
                                                                     src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Profile Picture"></a>
@@ -247,7 +300,7 @@
                                         <a href="#" class="btn-link text-semibold media-heading box-inline"
                                            style="text-decoration: none;">Nguyễn Thị B</a>
                                     </div>
-                                    <p>Mình cũng thấy vậy, ngon quá</p>
+                                    <p>Sed diam nonummy nibh euismod tincidunt...</p>
                                     <div class="pad-ver">
                                         <div class="btn-group">
                                             <span class="like-button" data-liked="false"><i class="fa fa-thumbs-up"></i></span>
@@ -255,17 +308,15 @@
                                             <span class="dislike-button" data-disliked="false"><i class="fa fa-thumbs-down"></i></span>
                                             <span class="dislike-count">0</span>
                                             <a href="#" class="btn btn-sm btn-default btn-hover-primary reply-button">Phản hồi</a>
+                                            <span class="report-button" data-bs-toggle="modal" data-bs-target="#reportModal"><i class="fa fa-flag"></i> Báo cáo</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- End phản hồi con -->
-
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- End một bình luận -->
         </div>
     </div>
 </main>
@@ -276,7 +327,6 @@
     </div>
 </footer>
 
-<!-- Reply Box Template (ẩn sẵn, sẽ chèn qua JS) -->
 <template id="reply-template">
     <div class="reply-box mt-2">
         <textarea class="form-control mb-2" rows="2" placeholder="Viết phản hồi..."></textarea>
@@ -284,50 +334,89 @@
     </div>
 </template>
 
-<!-- JS xử lý phản hồi và like/dislike -->
+<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reportModalLabel">Báo cáo bình luận</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Vui lòng chọn lý do báo cáo:</p>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="reportReason" id="reason1" value="Ngôn từ không phù hợp">
+                    <label class="form-check-label" for="reason1">
+                        Ngôn từ không phù hợp
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="reportReason" id="reason2" value="Thông tin sai lệch">
+                    <label class="form-check-label" for="reason2">
+                        Thông tin sai lệch
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="reportReason" id="reason3" value="Khác">
+                    <label class="form-check-label" for="reason3">
+                        Khác
+                    </label>
+                </div>
+                <textarea class="form-control" id="otherReasonTextarea" rows="3" placeholder="Vui lòng nhập lý do cụ thể..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="submitReport">Gửi báo cáo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="customAlertModal" tabindex="-1" aria-labelledby="customAlertModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p id="customAlertMessage"></p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Xử lý phản hồi
         const template = document.querySelector("#reply-template").innerHTML;
 
         document.querySelectorAll(".reply-button").forEach(button => {
             button.addEventListener("click", function (e) {
                 e.preventDefault();
-
-                // Xoá các ô reply hiện tại
                 document.querySelectorAll(".reply-box").forEach(el => el.remove());
-
-                // Tìm phần media-body gần nhất
                 const parent = this.closest(".media-body");
-
-                // Thêm ô nhập phản hồi
                 const box = document.createElement("div");
                 box.innerHTML = template;
                 parent.appendChild(box);
             });
         });
 
-        // Xử lý like/dislike cho mỗi nhóm nút
         document.querySelectorAll(".btn-group").forEach(group => {
             const likeButton = group.querySelector(".like-button");
             const dislikeButton = group.querySelector(".dislike-button");
             const likeCountElement = group.querySelector(".like-count");
             const dislikeCountElement = group.querySelector(".dislike-count");
 
-            // Xử lý like
             likeButton.addEventListener("click", function () {
                 const isLiked = this.getAttribute("data-liked") === "true";
                 const isDisliked = dislikeButton.getAttribute("data-disliked") === "true";
                 let likeCount = parseInt(likeCountElement.textContent);
 
-                // Nếu đã dislike, reset dislike trước khi like
                 if (isDisliked) {
                     dislikeButton.setAttribute("data-disliked", "false");
                     dislikeButton.classList.remove("active");
                     dislikeCountElement.textContent = "0";
                 }
 
-                // Toggle trạng thái like
                 if (isLiked) {
                     likeCount -= 1;
                     this.setAttribute("data-liked", "false");
@@ -341,20 +430,17 @@
                 likeCountElement.textContent = likeCount;
             });
 
-            // Xử lý dislike
             dislikeButton.addEventListener("click", function () {
                 const isDisliked = this.getAttribute("data-disliked") === "true";
                 const isLiked = likeButton.getAttribute("data-liked") === "true";
                 let dislikeCount = parseInt(dislikeCountElement.textContent);
 
-                // Nếu đã like, reset like trước khi dislike
                 if (isLiked) {
                     likeButton.setAttribute("data-liked", "false");
                     likeButton.classList.remove("active");
                     likeCountElement.textContent = "0";
                 }
 
-                // Toggle trạng thái dislike
                 if (isDisliked) {
                     dislikeCount -= 1;
                     this.setAttribute("data-disliked", "false");
@@ -366,6 +452,90 @@
                 }
 
                 dislikeCountElement.textContent = dislikeCount;
+            });
+        });
+
+        const reportReasons = document.querySelectorAll('input[name="reportReason"]');
+        const otherReasonTextarea = document.getElementById("otherReasonTextarea");
+
+        reportReasons.forEach(reason => {
+            reason.addEventListener("change", function () {
+                if (this.value === "Khác") {
+                    otherReasonTextarea.style.display = "block";
+                    otherReasonTextarea.focus();
+                } else {
+                    otherReasonTextarea.style.display = "none";
+                    otherReasonTextarea.value = "";
+                }
+            });
+        });
+
+        document.getElementById("submitReport").addEventListener("click", function () {
+            const selectedReason = document.querySelector('input[name="reportReason"]:checked');
+            const reportModal = bootstrap.Modal.getInstance(document.getElementById("reportModal"));
+            const customAlertModal = new bootstrap.Modal(document.getElementById("customAlertModal"));
+            const customAlertMessage = document.getElementById("customAlertMessage");
+
+            if (!selectedReason) {
+                customAlertMessage.textContent = "Vui lòng chọn một lý do trước khi gửi báo cáo!";
+                customAlertModal.show();
+                return;
+            }
+
+            if (selectedReason.value === "Khác" && !otherReasonTextarea.value.trim()) {
+                customAlertMessage.textContent = "Vui lòng nhập lý do cụ thể khi chọn 'Khác'!";
+                customAlertModal.show();
+                return;
+            }
+
+            customAlertMessage.textContent = "Báo cáo đã được gửi thành công!";
+            reportModal.hide();
+            customAlertModal.show();
+            otherReasonTextarea.style.display = "none";
+            otherReasonTextarea.value = "";
+            document.querySelector('input[name="reportReason"]:checked').checked = false;
+        });
+
+        const starRating = document.querySelector(".star-rating");
+        const stars = starRating.querySelectorAll(".star");
+
+        stars.forEach(star => {
+            star.addEventListener("click", function () {
+                const value = parseInt(this.getAttribute("data-value"));
+                starRating.setAttribute("data-rating", value);
+
+                stars.forEach(s => {
+                    const starValue = parseInt(s.getAttribute("data-value"));
+                    if (starValue <= value) {
+                        s.classList.add("filled");
+                    } else {
+                        s.classList.remove("filled");
+                    }
+                });
+            });
+
+            star.addEventListener("mouseover", function () {
+                const value = parseInt(this.getAttribute("data-value"));
+                stars.forEach(s => {
+                    const starValue = parseInt(s.getAttribute("data-value"));
+                    if (starValue <= value) {
+                        s.classList.add("filled");
+                    } else {
+                        s.classList.remove("filled");
+                    }
+                });
+            });
+
+            star.addEventListener("mouseout", function () {
+                const currentRating = parseInt(starRating.getAttribute("data-rating"));
+                stars.forEach(s => {
+                    const starValue = parseInt(s.getAttribute("data-value"));
+                    if (starValue <= currentRating) {
+                        s.classList.add("filled");
+                    } else {
+                        s.classList.remove("filled");
+                    }
+                });
             });
         });
     });

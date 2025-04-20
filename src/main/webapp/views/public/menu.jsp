@@ -76,7 +76,7 @@
                 <li><a href="" >Trang chủ</a></li>
                 <li><a href="">Giới thiệu</a></li>
                 <li><a href="/" class="active">Thực đơn</a></li>
-                <li><a href="">Đăng nhập</a></li>
+                <li><a href="/login">Đăng nhập</a></li>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>

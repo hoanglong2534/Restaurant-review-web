@@ -150,6 +150,9 @@
                         <div class="media-body">
                             <div class="mar-btm">
                                 <a href="#" class="btn-link text-semibold media-heading box-inline" style="text-decoration: none;">Nguyễn Văn A</a>
+                                <span class="comment-time text-muted" style="margin-left: 10px; font-size: 0.9rem;">
+                                    15/04/2025
+                                </span>
                             </div>
                             <p class="comment-text">consectetuer adipiscing elit, sed diam nonummy nibh...</p>
                             <div class="pad-ver">
@@ -170,6 +173,9 @@
                                 <div class="media-body">
                                     <div class="mar-btm">
                                         <a href="#" class="btn-link text-semibold media-heading box-inline" style="text-decoration: none;">Nguyễn Thị B</a>
+                                        <span class="comment-time text-muted" style="margin-left: 10px; font-size: 0.9rem;">
+                                            16/04/2025
+                                        </span>
                                     </div>
                                     <p class="comment-text">Sed diam nonummy nibh euismod tincidunt...</p>
                                     <div class="pad-ver">
@@ -190,6 +196,9 @@
                                 <div class="media-body">
                                     <div class="mar-btm">
                                         <a href="#" class="btn-link text-semibold media-heading box-inline" style="text-decoration: none;">Nguyễn Văn C</a>
+                                        <span class="comment-time text-muted" style="margin-left: 10px; font-size: 0.9rem;">
+                                            17/04/2025
+                                        </span>
                                     </div>
                                     <p class="comment-text">Món súp này nhìn ngon quá, mình vừa thử làm ở nhà, đây là thành quả!</p>
                                     <a href="https://bootdey.com/img/Content/avatar/avatar3.png" title="Nguyen Van C's Soup" data-gallery="comment-gallery" class="glightbox comment-image-link">

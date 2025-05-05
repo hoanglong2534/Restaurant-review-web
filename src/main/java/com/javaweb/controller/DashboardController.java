@@ -12,6 +12,6 @@ public class DashboardController extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/views/admin/dashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/admin/DashboardView.jsp").forward(request, response);
     }
 }

@@ -80,8 +80,6 @@
         </a>
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a href="">Trang chủ</a></li>
-                <li><a href="">Giới thiệu</a></li>
                 <li><a href="/" class="active">Thực đơn</a></li>
                 <li><a href="/login">Đăng nhập</a></li>
             </ul>
@@ -154,7 +152,7 @@
                                     15/04/2025
                                 </span>
                             </div>
-                            <p class="comment-text">consectetuer adipiscing elit, sed diam nonummy nibh...</p>
+                            <p class="comment-text">Trang trí đẹp quá</p>
                             <div class="pad-ver">
                                 <div class="btn-group">
                                     <span class="like-button" data-liked="false"><i class="fa fa-thumbs-up"></i></span>
@@ -171,13 +169,13 @@
                             <div class="media-block" data-comment-id="2" data-is-own="false">
                                 <a class="media-left" href="#"><img class="img-circle img-sm" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Profile Picture"></a>
                                 <div class="media-body">
-                                    <div class="mar-btm">
+                                    <digv class="mar-btm">
                                         <a href="#" class="btn-link text-semibold media-heading box-inline" style="text-decoration: none;">Nguyễn Thị B</a>
                                         <span class="comment-time text-muted" style="margin-left: 10px; font-size: 0.9rem;">
                                             16/04/2025
                                         </span>
-                                    </div>
-                                    <p class="comment-text">Sed diam nonummy nibh euismod tincidunt...</p>
+                                    </digv>
+                                    <p class="comment-text">Công phu ghê</p>
                                     <div class="pad-ver">
                                         <div class="btn-group">
                                             <span class="like-button" data-liked="false"><i class="fa fa-thumbs-up"></i></span>
@@ -231,7 +229,7 @@
 <template id="reply-template">
     <div class="reply-box mt-2">
         <textarea class="form-control mb-2" rows="2" placeholder="Viết phản hồi..."></textarea>
-        <button class="btn btn-sm btn-primary">Gửi phản hồi</button>
+        <button class="btn btn-sm btn-primary">Gửi</button>
     </div>
 </template>
 <template id="edit-template">

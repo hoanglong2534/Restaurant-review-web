@@ -73,8 +73,6 @@
 
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a href="" >Trang chủ</a></li>
-                <li><a href="">Giới thiệu</a></li>
                 <li><a href="/" class="active">Thực đơn</a></li>
                 <li><a href="/login">Đăng nhập</a></li>
             </ul>

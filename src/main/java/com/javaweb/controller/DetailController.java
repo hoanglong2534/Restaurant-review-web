@@ -15,7 +15,7 @@ public class DetailController extends HttpServlet {
         String id = request.getParameter("id");
         if (id != null && !id.isEmpty()) {
             request.setAttribute("id", id);
-            request.getRequestDispatcher("/views/public/detail.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/public/DetailView.jsp").forward(request, response);
         } else {
             response.sendRedirect(request.getContextPath() + "/");
         }

@@ -98,13 +98,6 @@
 
             <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
-                <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
-                    <li data-filter="*" class="filter-active">Tất cả</li>
-                    <li data-filter=".filter-app">Súp</li>
-                    <li data-filter=".filter-product">Khai vị</li>
-                    <li data-filter=".filter-branding">Cơm chiên</li>
-                </ul><!-- End Portfolio Filters -->
-
                 <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
 
                     <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">

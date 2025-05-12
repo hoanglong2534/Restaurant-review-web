@@ -78,13 +78,30 @@
         <a href="index.html" class="logo d-flex align-items-center me-auto">
             <h1 class="sitename">HOLO</h1>
         </a>
+        <%
+            Object userObj = session.getAttribute("user");
+            boolean isLoggedIn = userObj != null;
+            String fullName = "";
+            if (isLoggedIn) {
+                fullName = ((com.javaweb.model.User) userObj).getFullName();
+            }
+        %>
         <nav id="navmenu" class="navmenu">
             <ul>
                 <li><a href="/" class="active">Thực đơn</a></li>
-                <li><a href="/login">Đăng nhập</a></li>
+                <% if (isLoggedIn) { %>
+                    <li><a href="${pageContext.request.contextPath}/logout">Đăng xuất</a></li>
+                <% } else { %>
+                    <li><a href="${pageContext.request.contextPath}/login">Đăng nhập</a></li>
+                <% } %>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
+        <% if (isLoggedIn) { %>
+            <span class="navmenu-user" style="margin-left: 32px; color: #fff; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+                Xin chào, <%= fullName %>!
+            </span>
+        <% } %>
     </div>
 </header>
 <main class="main">

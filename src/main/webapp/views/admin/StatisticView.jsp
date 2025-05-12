@@ -1,4 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.javaweb.model.User" %>
+<%
+    User currentUser = (User) session.getAttribute("user");
+    String fullName = currentUser != null ? currentUser.getFullName() : "Khách";
+    String role = currentUser != null ? currentUser.getRole() : "";
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -117,7 +123,7 @@
                 </li>
                 <li class="relative px-6 py-3">
                     <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                       href="/login">
+                       href="/logout">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7" />
                         </svg>
@@ -136,15 +142,10 @@
                     class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
                 <div></div>
                 <ul class="flex items-center flex-shrink-0 space-x-6">
-                    <li class="relative flex items-center">
-                        <button class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none">
-                            <img class="object-cover w-8 h-8 rounded-full" src="./assets/img/team-1.jpg"
-                                 alt="Avatar" />
-                        </button>
-                        <div class="ml-2 text-sm">
-                            <span class="font-medium text-gray-700 dark:text-gray-300">Nguyễn Văn A</span>
-                            <p class="text-xs text-gray-500 dark:text-gray-400" x-text="userRole"></p>
-                        </div>
+                    <li class="relative">
+                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 font-medium">
+                            <%= fullName %> - <%= role %>
+                        </span>
                     </li>
                 </ul>
             </div>

@@ -1,4 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.javaweb.model.User" %>
+<%
+    User currentUser = (User) session.getAttribute("user");
+    String fullName = currentUser != null ? currentUser.getFullName() : "Khách";
+    String role = currentUser != null ? currentUser.getRole() : "";
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -118,7 +124,7 @@
                 </li>
                 <li class="relative px-6 py-3">
                     <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                       href="/login">
+                       href="/logout">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7" />
                         </svg>
@@ -137,15 +143,10 @@
                     class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
                 <div></div>
                 <ul class="flex items-center flex-shrink-0 space-x-6">
-                    <li class="relative flex items-center">
-                        <button class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none">
-                            <img class="object-cover w-8 h-8 rounded-full" src="./assets/img/team-1.jpg"
-                                 alt="Avatar" />
-                        </button>
-                        <div class="ml-2 text-sm">
-                            <span class="font-medium text-gray-700 dark:text-gray-300">Nguyễn Văn A</span>
-                            <p class="text-xs text-gray-500 dark:text-gray-400" x-text="userRole"></p>
-                        </div>
+                    <li class="relative">
+                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 font-medium">
+                            <%= fullName %> - <%= role %>
+                        </span>
                     </li>
                 </ul>
             </div>
@@ -251,12 +252,6 @@
                                 <td class="px-4 py-3 text-sm dish-column">Cơm chiên dương châu</td>
                                 <td class="px-4 py-3 customer-column">
                                     <div class="flex items-center text-sm">
-                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                            <img class="object-cover w-full h-full rounded-full"
-                                                 src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                                                 alt="" loading="lazy" />
-                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                        </div>
                                         <div>
                                             <p>Nguyễn Thị D</p>
                                         </div>
@@ -290,12 +285,6 @@
                                 <td class="px-4 py-3 text-sm dish-column">Phở bò</td>
                                 <td class="px-4 py-3 customer-column">
                                     <div class="flex items-center text-sm">
-                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                            <img class="object-cover w-full h-full rounded-full"
-                                                 src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&facepad=3&fit=facearea&s=707b9c33066bf8808c934c8ab394dff6"
-                                                 alt="" loading="lazy" />
-                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                        </div>
                                         <div>
                                             <p>Trần Thị B</p>
                                         </div>
@@ -329,12 +318,6 @@
                                 <td class="px-4 py-3 text-sm dish-column">Bánh mì pate</td>
                                 <td class="px-4 py-3 customer-column">
                                     <div class="flex items-center text-sm">
-                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                            <img class="object-cover w-full h-full rounded-full"
-                                                 src="https://images.unsplash.com/photo-1551069613-1904dbdcda11?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                                                 alt="" loading="lazy" />
-                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                        </div>
                                         <div>
                                             <p>Lê Văn C</p>
                                         </div>

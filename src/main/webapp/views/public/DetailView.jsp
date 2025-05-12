@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -109,15 +110,14 @@
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <div class="col-md-6">
-                    <img class="card-img-top mb-5 mb-md-0 hover-effect" src="assets/img/portfolio/app-1.png" alt="..." />
+                    <img class="card-img-top mb-5 mb-md-0 hover-effect" src="${dish.image}" alt="${dish.name}" />
                 </div>
                 <div class="col-md-6">
-                    <h1 class="display-5 fw-bolder">Súp gà ngô non</h1>
+                    <h1 class="display-5 fw-bolder">${dish.name}</h1>
                     <div class="fs-5 mb-5">
-                        <span class="text-decoration-line-through">50.000</span>
-                        <span>40.000 VND</span>
+                        <span>${dish.price} VND</span>
                     </div>
-                    <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+                    <p class="lead">${dish.description}</p>
                     <div class="d-flex">
                         <input class="form-control text-center me-3" placeholder="Nhập số lượng" id="inputQuantity" type="number" style="max-width: 10rem" />
                         <button class="btn btn-outline-dark flex-shrink-0" type="button">

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -119,142 +120,23 @@
 
                 <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
 
-                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-                        <div class="portfolio-content h-100">
-                            <img src="assets/img/portfolio/app-1.png" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Súp 1</h4>
-                                <p>Súp gà ngô non</p>
-                                <a href="assets/img/portfolio/app-1.png" title="Súp gà ngô non"
-                                   data-gallery="portfolio-gallery-app"
-                                   class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                                <a href="/detail?id=1" title="More Details" class="details-link"><i
-                                        class="bi bi-link-45deg"></i></a>
+                    <c:forEach var="dish" items="${dishes}">
+                        <div class="col-lg-4 col-md-6 portfolio-item isotope-item">
+                            <div class="portfolio-content h-100">
+                                <img src="${dish.image}" class="img-fluid" alt="${dish.name}">
+                                <div class="portfolio-info">
+                                    <h4>${dish.name}</h4>
+                                    <p>${dish.description}</p>
+                                    <a href="${dish.image}" title="${dish.name}"
+                                       data-gallery="portfolio-gallery-app"
+                                       class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                                    <a href="/detail?id=${dish.id}" title="More Details" class="details-link"><i
+                                            class="bi bi-link-45deg"></i></a>
+                                    <div style="margin-top: 8px; font-weight: bold; color: #e67e22;">${dish.price} đ</div>
+                                </div>
                             </div>
                         </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-                        <div class="portfolio-content h-100">
-                            <img src="assets/img/portfolio/product-1.png" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Khai vị 1</h4>
-                                <p>Nộm rau muống</p>
-                                <a href="assets/img/portfolio/product-1.png" title="Nộm rau muống"
-                                   data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i
-                                        class="bi bi-zoom-in"></i></a>
-                                <a href="/detail?id=2" title="More Details" class="details-link"><i
-                                        class="bi bi-link-45deg"></i></a>
-                            </div>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
-                        <div class="portfolio-content h-100">
-                            <img src="assets/img/portfolio/branding-1.png" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Cơm chiên 1</h4>
-                                <p>Cơm chiên chay ngũ sắc</p>
-                                <a href="assets/img/portfolio/branding-1.png" title="Cơm chiên chay ngũ sắc"
-                                   data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i
-                                        class="bi bi-zoom-in"></i></a>
-                                <a href="/detail?id=3" title="More Details" class="details-link"><i
-                                        class="bi bi-link-45deg"></i></a>
-                            </div>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-
-                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-                        <div class="portfolio-content h-100">
-                            <img src="assets/img/portfolio/app-2.png" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Súp 2</h4>
-                                <p>Súp rau củ</p>
-                                <a href="assets/img/portfolio/app-2.png" title="Súp rau củ"
-                                   data-gallery="portfolio-gallery-app"
-                                   class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                                <a href="/detail?id=4" title="More Details" class="details-link"><i
-                                        class="bi bi-link-45deg"></i></a>
-                            </div>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-                        <div class="portfolio-content h-100">
-                            <img src="assets/img/portfolio/product-2.png" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Khai vị 2</h4>
-                                <p>Chả giò chay</p>
-                                <a href="assets/img/portfolio/product-2.png" title="Chả giò chay"
-                                   data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i
-                                        class="bi bi-zoom-in"></i></a>
-                                <a href="/detail?id=5" title="More Details" class="details-link"><i
-                                        class="bi bi-link-45deg"></i></a>
-                            </div>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
-                        <div class="portfolio-content h-100">
-                            <img src="assets/img/portfolio/branding-2.png" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Cơm chiên 2</h4>
-                                <p>Cơm chiên dương châu</p>
-                                <a href="assets/img/portfolio/branding-2.png" title="Cơm chiên dương châu"
-                                   data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i
-                                        class="bi bi-zoom-in"></i></a>
-                                <a href="/detail?id=6" title="More Details" class="details-link"><i
-                                        class="bi bi-link-45deg"></i></a>
-                            </div>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-
-                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-                        <div class="portfolio-content h-100">
-                            <img src="assets/img/portfolio/app-3.png" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Súp 3</h4>
-                                <p>Súp gà nấm hương</p>
-                                <a href="assets/img/portfolio/app-3.png" title="Súp gà nấm hương"
-                                   data-gallery="portfolio-gallery-app"
-                                   class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                                <a href="/detail?id=7" title="More Details" class="details-link"><i
-                                        class="bi bi-link-45deg"></i></a>
-                            </div>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-                        <div class="portfolio-content h-100">
-                            <img src="assets/img/portfolio/product-3.png" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Khai vị 3</h4>
-                                <p>Há cảo chay</p>
-                                <a href="assets/img/portfolio/product-3.png" title="Há cảo chay"
-                                   data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i
-                                        class="bi bi-zoom-in"></i></a>
-                                <a href="/detail?id=8" title="More Details" class="details-link"><i
-                                        class="bi bi-link-45deg"></i></a>
-                            </div>
-                        </div>
-                    </div><!-- End Portfolio Item -->
-
-                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
-                        <div class="portfolio-content h-100">
-                            <img src="assets/img/portfolio/branding-3.png" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Cơm chiên 3</h4>
-                                <p>Cơm chiên nấm rong biển</p>
-                                <a href="assets/img/portfolio/branding-3.png" title="Cơm chiên nấm rong biển"
-                                   data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i
-                                        class="bi bi-zoom-in"></i></a>
-                                <a href="/detail?id=9" title="More Details" class="details-link"><i
-                                        class="bi bi-link-45deg"></i></a>
-                            </div>
-                        </div>
-                    </div><!-- End Portfolio Item -->
+                    </c:forEach>
 
                 </div><!-- End Portfolio Container -->
 

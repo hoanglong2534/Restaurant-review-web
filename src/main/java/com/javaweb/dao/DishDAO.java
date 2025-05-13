@@ -37,8 +37,10 @@ public class DishDAO {
             PreparedStatement stmt = conn.prepareStatement(sql)
         ) {
             stmt.setInt(1, id);
+            System.out.println("DEBUG: Query dish id = " + id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
+                    System.out.println("DEBUG: Found dish id = " + id);
                     Dish dish = new Dish();
                     dish.setId(rs.getInt("id"));
                     dish.setName(rs.getString("name"));
@@ -46,6 +48,8 @@ public class DishDAO {
                     dish.setPrice(rs.getInt("price"));
                     dish.setImage(rs.getString("image"));
                     return dish;
+                } else {
+                    System.out.println("DEBUG: NOT FOUND dish id = " + id);
                 }
             }
         } catch (Exception e) {

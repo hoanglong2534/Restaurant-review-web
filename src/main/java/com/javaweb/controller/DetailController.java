@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
+import java.util.ArrayList;
 
 @WebServlet("/detail")
 public class DetailController extends HttpServlet {
@@ -21,22 +22,28 @@ public class DetailController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String id = request.getParameter("id");
+        Dish dish = null;
+        List<Review> reviews = new ArrayList<>();
+        String error = null;
         if (id != null && !id.isEmpty()) {
             try {
                 int dishId = Integer.parseInt(id);
-                Dish dish = dishDAO.getDishById(dishId);
+                dish = dishDAO.getDishById(dishId);
                 if (dish != null) {
-                    List<Review> reviews = reviewDAO.getReviewsForDish(dishId);
-                    request.setAttribute("dish", dish);
-                    request.setAttribute("reviews", reviews);
-                    request.getRequestDispatcher("/views/public/DetailView.jsp").forward(request, response);
-                    return;
+                    reviews = reviewDAO.getReviewsForDish(dishId);
+                } else {
+                    error = "Không tìm thấy món ăn!";
                 }
             } catch (NumberFormatException e) {
-                // ignore, redirect below
+                error = "ID món ăn không hợp lệ!";
             }
+        } else {
+            error = "Thiếu ID món ăn!";
         }
-        response.sendRedirect(request.getContextPath() + "/");
+        request.setAttribute("dish", dish);
+        request.setAttribute("reviews", reviews);
+        request.setAttribute("error", error);
+        request.getRequestDispatcher("/views/public/DetailView.jsp").forward(request, response);
     }
 
     @Override

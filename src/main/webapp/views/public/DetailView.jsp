@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,7 +77,7 @@
 <body class="index-page">
 <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
-        <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <a href="/menu" class="logo d-flex align-items-center me-auto">
             <h1 class="sitename">HOLO</h1>
         </a>
         <%
@@ -142,13 +143,18 @@
                             <span class="star" data-value="5"><i class="fas fa-star"></i></span>
                         </div>
                     </div>
+                    <% if (!isLoggedIn) { %>
+                        <div class="alert alert-warning" style="background: #fff3cd; color: #856404; border: 1px solid #ffeeba; margin-bottom: 16px;">
+                            Hãy <a href="${pageContext.request.contextPath}/login" style="color: #0d6efd; text-decoration: underline; font-weight: 600;">đăng nhập</a> để sử dụng các chức năng bình luận, thích, phản hồi, báo cáo...
+                        </div>
+                    <% } %>
                     <textarea class="form-control" rows="2" placeholder="Bạn thấy món ăn này như thế nào? Chia sẻ cho mọi người cùng biết nhé!"></textarea>
                     <div class="mar-top">
                         <label for="photoInput" class="attach-photo-btn">
                             <i class="fas fa-paperclip"></i> Đính kèm ảnh
                         </label>
                         <input type="file" id="photoInput" accept="image/*">
-                        <button class="btn btn-sm btn-primary pull-right" type="submit">
+                        <button class="btn btn-sm btn-primary pull-right" type="submit" <%= !isLoggedIn ? "disabled style='opacity:0.5'" : "" %>>
                             <i class="fa fa-pencil fa-fw"></i> Bình luận ngay
                         </button>
                     </div>
@@ -160,79 +166,49 @@
             </div>
             <div class="panel">
                 <div class="panel-body">
-                    <div class="media-block" data-comment-id="1" data-is-own="true">
-                        <a class="media-left" href="#"><img class="img-circle img-sm" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Profile Picture"></a>
-                        <div class="media-body">
-                            <div class="mar-btm">
-                                <a href="#" class="btn-link text-semibold media-heading box-inline" style="text-decoration: none;">Nguyễn Văn A</a>
-                                <span class="comment-time text-muted" style="margin-left: 10px; font-size: 0.9rem;">
-                                    15/04/2025
-                                </span>
-                            </div>
-                            <p class="comment-text">Trang trí đẹp quá</p>
-                            <div class="pad-ver">
-                                <div class="btn-group">
-                                    <span class="like-button" data-liked="false"><i class="fa fa-thumbs-up"></i></span>
-                                    <span class="like-count">0</span>
-                                    <span class="dislike-button" data-disliked="false"><i class="fa fa-thumbs-down"></i></span>
-                                    <span class="dislike-count">0</span>
-                                    <a href="#" class="btn btn-sm btn-default btn-hover-primary reply-button">Phản hồi</a>
-                                    <span class="report-button" data-bs-toggle="modal" data-bs-target="#reportModal"><i class="fa fa-flag"></i> Báo cáo</span>
-                                    <span class="edit-button"><i class="fa fa-edit"></i> Sửa</span>
-                                    <span class="delete-button"><i class="fa fa-trash"></i> Xóa</span>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="media-block" data-comment-id="2" data-is-own="false">
-                                <a class="media-left" href="#"><img class="img-circle img-sm" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Profile Picture"></a>
-                                <div class="media-body">
-                                    <digv class="mar-btm">
-                                        <a href="#" class="btn-link text-semibold media-heading box-inline" style="text-decoration: none;">Nguyễn Thị B</a>
-                                        <span class="comment-time text-muted" style="margin-left: 10px; font-size: 0.9rem;">
-                                            16/04/2025
-                                        </span>
-                                    </digv>
-                                    <p class="comment-text">Công phu ghê</p>
-                                    <div class="pad-ver">
-                                        <div class="btn-group">
-                                            <span class="like-button" data-liked="false"><i class="fa fa-thumbs-up"></i></span>
-                                            <span class="like-count">0</span>
-                                            <span class="dislike-button" data-disliked="false"><i class="fa fa-thumbs-down"></i></span>
-                                            <span class="dislike-count">0</span>
-                                            <a href="#" class="btn btn-sm btn-default btn-hover-primary reply-button">Phản hồi</a>
-                                            <span class="report-button" data-bs-toggle="modal" data-bs-target="#reportModal"><i class="fa fa-flag"></i> Báo cáo</span>
+                    <c:choose>
+                        <c:when test="${empty reviews}">
+                            <div class="text-center text-muted" style="font-size: 1.1rem; padding: 24px 0;">Hiện không có đánh giá nào cho món ăn này.</div>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach items="${reviews}" var="review">
+                                <div class="media-block" data-comment-id="${review.id}" data-is-own="${review.userId == sessionScope.user.id}">
+                                    <div class="media-body">
+                                        <div class="mar-btm">
+                                            <a href="#" class="btn-link text-semibold media-heading box-inline" style="text-decoration: none;">${review.userName}</a>
+                                            <span class="comment-time text-muted" style="margin-left: 10px; font-size: 0.9rem;">
+                                                <fmt:formatDate value="${review.createDate}" pattern="dd/MM/yyyy"/>
+                                            </span>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="media-block" data-comment-id="3" data-is-own="false">
-                                <a class="media-left" href="#"><img class="img-circle img-sm" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Profile Picture"></a>
-                                <div class="media-body">
-                                    <div class="mar-btm">
-                                        <a href="#" class="btn-link text-semibold media-heading box-inline" style="text-decoration: none;">Nguyễn Văn C</a>
-                                        <span class="comment-time text-muted" style="margin-left: 10px; font-size: 0.9rem;">
-                                            17/04/2025
-                                        </span>
-                                    </div>
-                                    <p class="comment-text">Món súp này nhìn ngon quá, mình vừa thử làm ở nhà, đây là thành quả!</p>
-                                    <a href="https://bootdey.com/img/Content/avatar/avatar3.png" title="Nguyen Van C's Soup" data-gallery="comment-gallery" class="glightbox comment-image-link">
-                                        <img class="comment-image" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Nguyen Van C's Soup">
-                                    </a>
-                                    <div class="pad-ver">
-                                        <div class="btn-group">
-                                            <span class="like-button" data-liked="false"><i class="fa fa-thumbs-up"></i></span>
-                                            <span class="like-count">0</span>
-                                            <span class="dislike-button" data-disliked="false"><i class="fa fa-thumbs-down"></i></span>
-                                            <span class="dislike-count">0</span>
-                                            <a href="#" class="btn btn-sm btn-default btn-hover-primary reply-button">Phản hồi</a>
-                                            <span class="report-button" data-bs-toggle="modal" data-bs-target="#reportModal"><i class="fa fa-flag"></i> Báo cáo</span>
+                                        <div class="star-rating" data-rating="${review.star}">
+                                            <c:forEach begin="1" end="5" var="i">
+                                                <span class="star ${i <= review.star ? 'filled' : ''}" data-value="${i}">
+                                                    <i class="fas fa-star"></i>
+                                                </span>
+                                            </c:forEach>
                                         </div>
+                                        <p class="comment-text">${review.content}</p>
+                                        <c:if test="${not empty review.image}">
+                                            <a href="${review.image}" title="Review Image" data-gallery="comment-gallery" class="glightbox comment-image-link">
+                                                <img class="comment-image" src="${review.image}" alt="Review Image">
+                                            </a>
+                                        </c:if>
+                                        <div class="pad-ver">
+                                            <div class="btn-group">
+                                                <span class="like-button" data-liked="false" <%= !isLoggedIn ? "style='pointer-events:none;opacity:0.5'" : "" %>><i class="fa fa-thumbs-up"></i></span>
+                                                <span class="like-count">0</span>
+                                                <span class="dislike-button" data-disliked="false" <%= !isLoggedIn ? "style='pointer-events:none;opacity:0.5'" : "" %>><i class="fa fa-thumbs-down"></i></span>
+                                                <span class="dislike-count">0</span>
+                                                <a href="#" class="btn btn-sm btn-default btn-hover-primary reply-button" <%= !isLoggedIn ? "style='pointer-events:none;opacity:0.5'" : "" %>>Phản hồi</a>
+                                                <span class="report-button" data-bs-toggle="modal" data-bs-target="#reportModal" <%= !isLoggedIn ? "style='pointer-events:none;opacity:0.5'" : "" %>><i class="fa fa-flag"></i> Báo cáo</span>
+                                            </div>
+                                        </div>
+                                        <hr>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>

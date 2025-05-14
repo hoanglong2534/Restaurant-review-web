@@ -1,9 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.javaweb.model.User" %>
 <%
-    User currentUser = (User) session.getAttribute("user");
-    String fullName = currentUser != null ? currentUser.getFullName() : "Khách";
-    String role = currentUser != null ? currentUser.getRole() : "";
+    com.javaweb.model.User user = (com.javaweb.model.User) session.getAttribute("user");
+    if (user == null || !"admin".equals(user.getRole())) {
+        response.sendRedirect("../public/LoginView.jsp");
+        return;
+    }
 %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -123,7 +124,7 @@
                 </li>
                 <li class="relative px-6 py-3">
                     <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                       href="/logout">
+                       href="/login">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7" />
                         </svg>
@@ -138,16 +139,10 @@
     <div class="flex flex-col flex-1 w-full">
         <!-- Header -->
         <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
-            <div
-                    class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
-                <div></div>
-                <ul class="flex items-center flex-shrink-0 space-x-6">
-                    <li class="relative">
-                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 font-medium">
-                            <%= fullName %> - <%= role %>
-                        </span>
-                    </li>
-                </ul>
+            <div class="container flex items-center justify-end h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
+                <span class="font-medium text-gray-700 dark:text-gray-300">
+                    Xin chào, <b><%= user.getFullName() %></b> - <%= user.getRole() %>
+                </span>
             </div>
         </header>
         <!-- Main content -->

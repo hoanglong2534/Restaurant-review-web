@@ -1,9 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.javaweb.model.User" %>
 <%
-    User currentUser = (User) session.getAttribute("user");
-    String fullName = currentUser != null ? currentUser.getFullName() : "Khách";
-    String role = currentUser != null ? currentUser.getRole() : "";
+    com.javaweb.model.User user = (com.javaweb.model.User) session.getAttribute("user");
+    if (user == null || !"admin".equals(user.getRole())) {
+        response.sendRedirect("../public/LoginView.jsp");
+        return;
+    }
 %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -137,7 +138,7 @@
         </li>
         <li class="relative px-6 py-3">
           <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-             href="/logout">
+             href="/login">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7" />
             </svg>
@@ -152,16 +153,10 @@
   <div class="flex flex-col flex-1 w-full">
     <!-- Header -->
     <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
-      <div
-              class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
-        <div></div>
-        <ul class="flex items-center flex-shrink-0 space-x-6">
-          <li class="relative">
-            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 font-medium">
-                <%= fullName %> - <%= role %>
-            </span>
-          </li>
-        </ul>
+      <div class="container flex items-center justify-end h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
+        <span class="font-medium text-gray-700 dark:text-gray-300">
+          Xin chào, <b><%= user.getFullName() %></b> - <%= user.getRole() %>
+        </span>
       </div>
     </header>
     <!-- Main content -->
@@ -234,6 +229,12 @@
                 <td class="px-4 py-3 text-sm dish-column">Cơm chiên dương châu</td>
                 <td class="px-4 py-3 user-column">
                   <div class="flex items-center text-sm">
+                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                      <img class="object-cover w-full h-full rounded-full"
+                           src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                           alt="" loading="lazy" />
+                      <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                    </div>
                     <div>
                       <p>Nguyễn Thị D</p>
                     </div>
@@ -241,6 +242,12 @@
                 </td>
                 <td class="px-4 py-3 user-column">
                   <div class="flex items-center text-sm">
+                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                      <img class="object-cover w-full h-full rounded-full"
+                           src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max"
+                           alt="" loading="lazy" />
+                      <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                    </div>
                     <div>
                       <p>Phạm Văn E</p>
                     </div>
@@ -272,6 +279,12 @@
                 <td class="px-4 py-3 text-sm dish-column">Phở bò</td>
                 <td class="px-4 py-3 user-column">
                   <div class="flex items-center text-sm">
+                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                      <img class="object-cover w-full h-full rounded-full"
+                           src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&facepad=3&fit=facearea&s=707b9c33066bf8808c934c8ab394dff6"
+                           alt="" loading="lazy" />
+                      <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                    </div>
                     <div>
                       <p>Trần Thị B</p>
                     </div>
@@ -279,6 +292,12 @@
                 </td>
                 <td class="px-4 py-3 user-column">
                   <div class="flex items-center text-sm">
+                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                      <img class="object-cover w-full h-full rounded-full"
+                           src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max"
+                           alt="" loading="lazy" />
+                      <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                    </div>
                     <div>
                       <p>Hoàng Văn F</p>
                     </div>
@@ -310,6 +329,12 @@
                 <td class="px-4 py-3 text-sm dish-column">Bánh mì pate</td>
                 <td class="px-4 py-3 user-column">
                   <div class="flex items-center text-sm">
+                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                      <img class="object-cover w-full h-full rounded-full"
+                           src="https://images.unsplash.com/photo-1551069613-1904dbdcda11?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                           alt="" loading="lazy" />
+                      <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                    </div>
                     <div>
                       <p>Lê Văn C</p>
                     </div>
@@ -317,6 +342,12 @@
                 </td>
                 <td class="px-4 py-3 user-column">
                   <div class="flex items-center text-sm">
+                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                      <img class="object-cover w-full h-full rounded-full"
+                           src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max"
+                           alt="" loading="lazy" />
+                      <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                    </div>
                     <div>
                       <p>Nguyễn Thị G</p>
                     </div>

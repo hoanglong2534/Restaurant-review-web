@@ -33,4 +33,38 @@ public class ReviewController extends HttpServlet {
             }
         }
 
+        @Override
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            String uri = request.getRequestURI();
+            if (uri.endsWith("/edit-review")) {
+                javax.servlet.http.HttpSession session = request.getSession();
+                com.javaweb.model.User user = (com.javaweb.model.User) session.getAttribute("user");
+                if (user == null) {
+                    response.sendRedirect(request.getContextPath() + "/login");
+                    return;
+                }
+                String reviewIdStr = request.getParameter("reviewId");
+                String content = request.getParameter("content");
+                String starStr = request.getParameter("star");
+                if (reviewIdStr != null && content != null && starStr != null) {
+                    int reviewId = Integer.parseInt(reviewIdStr);
+                    int star = Integer.parseInt(starStr);
+                    ReviewDAO dao = new ReviewDAO();
+                    com.javaweb.model.Review review = dao.getReviewById(reviewId);
+                    if (review != null && review.getUserId() == user.getId()) {
+                        review.setContent(content);
+                        review.setStar(star);
+                        dao.updateReview(review);
+                    }
+                }
+                String referer = request.getHeader("referer");
+                if (referer != null && referer.contains("id=")) {
+                    response.sendRedirect(referer);
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/");
+                }
+                return;
+            }
+            // ... existing code for other POST actions ...
+        }
 }

@@ -8,6 +8,7 @@ public class Comment {
     private Date createDate;
     private int userId;
     private int reviewId;
+    private String userFullName;
 
     public Comment() {}
 
@@ -29,4 +30,6 @@ public class Comment {
     public void setUserId(int userId) { this.userId = userId; }
     public int getReviewId() { return reviewId; }
     public void setReviewId(int reviewId) { this.reviewId = reviewId; }
+    public String getUserFullName() { return userFullName; }
+    public void setUserFullName(String userFullName) { this.userFullName = userFullName; }
 } 

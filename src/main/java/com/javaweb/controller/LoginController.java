@@ -40,7 +40,7 @@ public class LoginController extends HttpServlet {
             if ("admin".equals(user.getRole()) || "staff".equals(user.getRole())) {
                 response.sendRedirect(request.getContextPath() + "/admin");
             } else {
-                response.sendRedirect(request.getContextPath() + "/menu");
+                response.sendRedirect(request.getContextPath() + "/");
             }
         } else {
             request.setAttribute("error", "Sai tên đăng nhập hoặc mật khẩu!");

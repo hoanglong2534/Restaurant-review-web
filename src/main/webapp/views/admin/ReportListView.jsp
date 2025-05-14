@@ -237,7 +237,7 @@
                   <td class="px-4 py-3 text-sm report-content-column">${report.reason}</td>
                   <td class="px-4 py-3 text-sm">${report.createDate}</td>
                   <td class="px-4 py-3 action-column">
-                    <form method="get" action="/admin/list-report" style="display:inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa đánh giá này?');">
+                    <form method="get" action="/admin/list-report" style="display:inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa báo cáo này?');">
                       <input type="hidden" name="action" value="delete" />
                       <input type="hidden" name="id" value="${report.id}" />
                       <button type="submit" class="btn btn-link text-danger p-0" style="text-decoration: none;">Xóa</button>

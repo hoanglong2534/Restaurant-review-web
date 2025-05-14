@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,16 +82,19 @@
         </a>
         <%
             Object userObj = session.getAttribute("user");
-            boolean isLoggedIn = userObj != null;
+            request.setAttribute("isLoggedIn", userObj != null);
             String fullName = "";
-            if (isLoggedIn) {
+            Integer currentUserId = null;
+            if (userObj != null) {
                 fullName = ((com.javaweb.model.User) userObj).getFullName();
+                currentUserId = ((com.javaweb.model.User) userObj).getId();
             }
+            request.setAttribute("currentUserId", currentUserId);
         %>
         <nav id="navmenu" class="navmenu">
             <ul>
                 <li><a href="/" class="active">Thực đơn</a></li>
-                <% if (isLoggedIn) { %>
+                <% if (userObj != null) { %>
                     <li><a href="${pageContext.request.contextPath}/logout">Đăng xuất</a></li>
                 <% } else { %>
                     <li><a href="${pageContext.request.contextPath}/login">Đăng nhập</a></li>
@@ -98,7 +102,7 @@
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
-        <% if (isLoggedIn) { %>
+        <% if (userObj != null) { %>
             <span class="navmenu-user" style="margin-left: 32px; color: #fff; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
                 Xin chào, <%= fullName %>!
             </span>
@@ -106,6 +110,9 @@
     </div>
 </header>
 <main class="main">
+    <c:if test="${not empty error}">
+        <div class="alert alert-danger text-center mt-5">${error}</div>
+    </c:if>
     <section class="py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
@@ -132,17 +139,25 @@
         <div class="col-md-12 bootstrap snippets">
             <div class="panel">
                 <div class="panel-body">
-                    <div class="rating-wrapper">
-                        <span class="rating-label">Đánh giá món ăn:</span>
-                        <div class="star-rating" data-rating="0">
-                            <span class="star" data-value="1"><i class="fas fa-star"></i></span>
-                            <span class="star" data-value="2"><i class="fas fa-star"></i></span>
-                            <span class="star" data-value="3"><i class="fas fa-star"></i></span>
-                            <span class="star" data-value="4"><i class="fas fa-star"></i></span>
-                            <span class="star" data-value="5"><i class="fas fa-star"></i></span>
+                    <c:if test="${isLoggedIn}">
+                        <form action="${pageContext.request.contextPath}/detail?id=${dish.id}" method="post" enctype="multipart/form-data" style="margin-bottom: 24px;">
+                            <div class="rating-wrapper">
+                                <span class="rating-label">Đánh giá món ăn:</span>
+                                <div class="star-rating" data-rating="0">
+                                    <c:forEach var="i" begin="1" end="5">
+                                        <input type="radio" name="star" value="${i}" id="star${i}" required>
+                                        <label for="star${i}"><i class="fas fa-star"></i></label>
+                                    </c:forEach>
+                                </div>
+                            </div>
+
+                        </form>
+                    </c:if>
+                    <c:if test="${!isLoggedIn}">
+                        <div class="alert alert-info text-center">
+                            Bạn cần <a href="${pageContext.request.contextPath}/login">đăng nhập</a> để bình luận.
                         </div>
-                    </div>
-                    <textarea class="form-control" rows="2" placeholder="Bạn thấy món ăn này như thế nào? Chia sẻ cho mọi người cùng biết nhé!"></textarea>
+                    </c:if>
                     <div class="mar-top">
                         <label for="photoInput" class="attach-photo-btn">
                             <i class="fas fa-paperclip"></i> Đính kèm ảnh
@@ -160,79 +175,81 @@
             </div>
             <div class="panel">
                 <div class="panel-body">
-                    <div class="media-block" data-comment-id="1" data-is-own="true">
-                        <a class="media-left" href="#"><img class="img-circle img-sm" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Profile Picture"></a>
-                        <div class="media-body">
-                            <div class="mar-btm">
-                                <a href="#" class="btn-link text-semibold media-heading box-inline" style="text-decoration: none;">Nguyễn Văn A</a>
-                                <span class="comment-time text-muted" style="margin-left: 10px; font-size: 0.9rem;">
-                                    15/04/2025
-                                </span>
-                            </div>
-                            <p class="comment-text">Trang trí đẹp quá</p>
-                            <div class="pad-ver">
-                                <div class="btn-group">
-                                    <span class="like-button" data-liked="false"><i class="fa fa-thumbs-up"></i></span>
-                                    <span class="like-count">0</span>
-                                    <span class="dislike-button" data-disliked="false"><i class="fa fa-thumbs-down"></i></span>
-                                    <span class="dislike-count">0</span>
-                                    <a href="#" class="btn btn-sm btn-default btn-hover-primary reply-button">Phản hồi</a>
-                                    <span class="report-button" data-bs-toggle="modal" data-bs-target="#reportModal"><i class="fa fa-flag"></i> Báo cáo</span>
-                                    <span class="edit-button"><i class="fa fa-edit"></i> Sửa</span>
-                                    <span class="delete-button"><i class="fa fa-trash"></i> Xóa</span>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="media-block" data-comment-id="2" data-is-own="false">
-                                <a class="media-left" href="#"><img class="img-circle img-sm" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Profile Picture"></a>
-                                <div class="media-body">
-                                    <digv class="mar-btm">
-                                        <a href="#" class="btn-link text-semibold media-heading box-inline" style="text-decoration: none;">Nguyễn Thị B</a>
-                                        <span class="comment-time text-muted" style="margin-left: 10px; font-size: 0.9rem;">
-                                            16/04/2025
-                                        </span>
-                                    </digv>
-                                    <p class="comment-text">Công phu ghê</p>
-                                    <div class="pad-ver">
-                                        <div class="btn-group">
-                                            <span class="like-button" data-liked="false"><i class="fa fa-thumbs-up"></i></span>
-                                            <span class="like-count">0</span>
-                                            <span class="dislike-button" data-disliked="false"><i class="fa fa-thumbs-down"></i></span>
-                                            <span class="dislike-count">0</span>
-                                            <a href="#" class="btn btn-sm btn-default btn-hover-primary reply-button">Phản hồi</a>
-                                            <span class="report-button" data-bs-toggle="modal" data-bs-target="#reportModal"><i class="fa fa-flag"></i> Báo cáo</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="media-block" data-comment-id="3" data-is-own="false">
-                                <a class="media-left" href="#"><img class="img-circle img-sm" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Profile Picture"></a>
-                                <div class="media-body">
-                                    <div class="mar-btm">
-                                        <a href="#" class="btn-link text-semibold media-heading box-inline" style="text-decoration: none;">Nguyễn Văn C</a>
-                                        <span class="comment-time text-muted" style="margin-left: 10px; font-size: 0.9rem;">
-                                            17/04/2025
-                                        </span>
-                                    </div>
-                                    <p class="comment-text">Món súp này nhìn ngon quá, mình vừa thử làm ở nhà, đây là thành quả!</p>
-                                    <a href="https://bootdey.com/img/Content/avatar/avatar3.png" title="Nguyen Van C's Soup" data-gallery="comment-gallery" class="glightbox comment-image-link">
-                                        <img class="comment-image" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Nguyen Van C's Soup">
+                    <c:if test="${!isLoggedIn}">
+                        <div class="alert alert-info text-center">
+                            Bạn cần <a href="${pageContext.request.contextPath}/login">đăng nhập</a> để tương tác (bình luận, thích, phản hồi, báo cáo...)
+                        </div>
+                    </c:if>
+                    <c:forEach var="review" items="${reviews}">
+                        <div class="media-block" style="margin-bottom: 32px;">
+                            <div class="media-body">
+                                <div class="mar-btm">
+                                    <a href="#" class="btn-link text-semibold media-heading box-inline" style="text-decoration: none; color: #e74c3c;">
+                                        ${review.userFullName}
                                     </a>
-                                    <div class="pad-ver">
-                                        <div class="btn-group">
-                                            <span class="like-button" data-liked="false"><i class="fa fa-thumbs-up"></i></span>
-                                            <span class="like-count">0</span>
-                                            <span class="dislike-button" data-disliked="false"><i class="fa fa-thumbs-down"></i></span>
-                                            <span class="dislike-count">0</span>
-                                            <a href="#" class="btn btn-sm btn-default btn-hover-primary reply-button">Phản hồi</a>
-                                            <span class="report-button" data-bs-toggle="modal" data-bs-target="#reportModal"><i class="fa fa-flag"></i> Báo cáo</span>
+                                    <span class="comment-time text-muted" style="margin-left: 10px; font-size: 0.9rem;">
+                                        <fmt:formatDate value="${review.createDate}" pattern="dd/MM/yyyy"/>
+                                    </span>
+                                    <span class="badge bg-warning text-dark ms-2">${review.star}★</span>
+                                </div>
+                                <p class="comment-text">${review.content}</p>
+                                <c:if test="${not empty review.image}">
+                                    <img class="comment-image" src="${review.image}" alt="Review Image">
+                                </c:if>
+                                <c:if test="${isLoggedIn}">
+                                    <form action="${pageContext.request.contextPath}/interaction" method="post" style="display:inline;">
+                                        <input type="hidden" name="reviewId" value="${review.id}"/>
+                                        <input type="hidden" name="type" value="like"/>
+                                        <button type="submit" class="like-button" style="background:none;border:none;padding:0;"><i class="fa fa-thumbs-up"></i></button>
+                                        <span class="like-count">${likeDislikeMap[review.id][0]}</span>
+                                    </form>
+                                    <form action="${pageContext.request.contextPath}/interaction" method="post" style="display:inline;">
+                                        <input type="hidden" name="reviewId" value="${review.id}"/>
+                                        <input type="hidden" name="type" value="dislike"/>
+                                        <button type="submit" class="dislike-button" style="background:none;border:none;padding:0;"><i class="fa fa-thumbs-down"></i></button>
+                                        <span class="dislike-count">${likeDislikeMap[review.id][1]}</span>
+                                    </form>
+                                    <button type="button" class="btn btn-sm btn-default btn-hover-primary reply-toggle" data-review-id="${review.id}">Phản hồi</button>
+                                    <span class="report-button" data-bs-toggle="modal" data-bs-target="#reportModal" data-review-id="${review.id}"><i class="fa fa-flag"></i> Báo cáo</span>
+                                    <c:if test="${review.userId == currentUserId}">
+                                        <button type="button" class="btn btn-sm btn-warning edit-toggle" data-review-id="${review.id}">Sửa</button>
+                                        <div class="edit-form" id="edit-form-${review.id}" style="display:none; margin-top:10px;">
+                                            <form action="${pageContext.request.contextPath}/detail?id=${dish.id}" method="post">
+                                                <input type="hidden" name="reviewId" value="${review.id}" />
+                                                <textarea class="form-control mb-2" name="content" rows="2">${review.content}</textarea>
+                                                <input type="number" name="star" min="1" max="5" value="${review.star}" class="form-control mb-2" style="width:100px;display:inline-block;" />
+                                                <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
+                                                <button type="button" class="btn btn-secondary btn-sm cancel-edit" data-review-id="${review.id}">Hủy</button>
+                                            </form>
+                                        </div>
+                                    </c:if>
+                                    <div class="reply-form" id="reply-form-${review.id}" style="display:none; margin-top:10px;">
+                                        <form action="${pageContext.request.contextPath}/comment" method="post">
+                                            <input type="hidden" name="reviewId" value="${review.id}" />
+                                            <textarea class="form-control mb-2" name="content" rows="2" placeholder="Viết phản hồi..."></textarea>
+                                            <button type="submit" class="btn btn-primary btn-sm">Gửi</button>
+                                        </form>
+                                    </div>
+                                </c:if>
+                                <!-- Hiển thị comment cho review này -->
+                                <c:forEach var="comment" items="${commentsMap[review.id]}">
+                                    <div class="media-block" style="margin-left: 40px;">
+                                        <div class="media-body">
+                                            <div class="mar-btm">
+                                                <a href="#" class="btn-link text-semibold media-heading box-inline" style="text-decoration: none; color: #2980b9;">
+                                                    ${comment.userFullName}
+                                                </a>
+                                                <span class="comment-time text-muted" style="margin-left: 10px; font-size: 0.9rem;">
+                                                    <fmt:formatDate value="${comment.createDate}" pattern="dd/MM/yyyy"/>
+                                                </span>
+                                            </div>
+                                            <p class="comment-text">${comment.content}</p>
                                         </div>
                                     </div>
-                                </div>
+                                </c:forEach>
                             </div>
                         </div>
-                    </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -261,29 +278,32 @@
 <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="reportModalLabel">Báo cáo bình luận</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Vui lòng chọn lý do báo cáo:</p>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="reportReason" id="reason1" value="Ngôn từ không phù hợp">
-                    <label class="form-check-label" for="reason1">Ngôn từ không phù hợp</label>
+            <form id="reportForm" action="${pageContext.request.contextPath}/report" method="post">
+                <input type="hidden" id="reportReviewId" name="reviewId" value="" />
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reportModalLabel">Báo cáo đánh giá</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="reportReason" id="reason2" value="Thông tin sai lệch">
-                    <label class="form-check-label" for="reason2">Thông tin sai lệch</label>
+                <div class="modal-body">
+                    <p>Vui lòng chọn lý do báo cáo:</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="reason" id="reason1" value="Ngôn từ không phù hợp" required>
+                        <label class="form-check-label" for="reason1">Ngôn từ không phù hợp</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="reason" id="reason2" value="Thông tin sai lệch" required>
+                        <label class="form-check-label" for="reason2">Thông tin sai lệch</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="reason" id="reason3" value="Khác" required>
+                        <label class="form-check-label" for="reason3">Khác</label>
+                    </div>
+                    <textarea class="form-control" id="otherReasonTextarea" name="reasonOther" rows="3" placeholder="Vui lòng nhập lý do cụ thể..."></textarea>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="reportReason" id="reason3" value="Khác">
-                    <label class="form-check-label" for="reason3">Khác</label>
+                <div class="modal-footer justify-content-center">
+                    <button type="submit" class="btn btn-primary">Gửi báo cáo</button>
                 </div>
-                <textarea class="form-control" id="otherReasonTextarea" rows="3" placeholder="Vui lòng nhập lý do cụ thể..."></textarea>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-primary" id="submitReport">Gửi báo cáo</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -319,14 +339,33 @@
         const lightbox = GLightbox({ selector: '.glightbox' });
         const replyTemplate = document.querySelector("#reply-template").innerHTML;
         const editTemplate = document.querySelector("#edit-template").innerHTML;
-        document.querySelectorAll(".reply-button").forEach(button => {
-            button.addEventListener("click", function (e) {
-                e.preventDefault();
-                document.querySelectorAll(".reply-box").forEach(el => el.remove());
-                const parent = this.closest(".media-body");
-                const box = document.createElement("div");
-                box.innerHTML = replyTemplate;
-                parent.appendChild(box);
+        document.querySelectorAll(".reply-toggle").forEach(button => {
+            button.addEventListener("click", function () {
+                var reviewId = button.getAttribute('data-review-id');
+                var form = document.getElementById('reply-form-' + reviewId);
+                if (form.style.display === 'none') {
+                    form.style.display = 'block';
+                } else {
+                    form.style.display = 'none';
+                }
+            });
+        });
+        document.querySelectorAll(".edit-toggle").forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var reviewId = btn.getAttribute('data-review-id');
+                var form = document.getElementById('edit-form-' + reviewId);
+                if (form.style.display === 'none') {
+                    form.style.display = 'block';
+                } else {
+                    form.style.display = 'none';
+                }
+            });
+        });
+        document.querySelectorAll(".cancel-edit").forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var reviewId = btn.getAttribute('data-review-id');
+                var form = document.getElementById('edit-form-' + reviewId);
+                form.style.display = 'none';
             });
         });
         document.querySelectorAll(".btn-group").forEach(group => {
@@ -375,51 +414,94 @@
                 dislikeCountElement.textContent = dislikeCount;
             });
         });
-        const reportReasons = document.querySelectorAll('input[name="reportReason"]');
-        const otherReasonTextarea = document.getElementById("otherReasonTextarea");
-        reportReasons.forEach(reason => {
-            reason.addEventListener("change", function () {
-                if (this.value === "Khác") {
-                    otherReasonTextarea.style.display = "block";
-                    otherReasonTextarea.focus();
+        const reportModal = document.getElementById('reportModal');
+        const reportForm = document.getElementById('reportForm');
+        const otherReasonTextarea = document.getElementById('otherReasonTextarea');
+        const reportReviewId = document.getElementById('reportReviewId');
+
+        document.querySelectorAll('.report-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const reviewId = this.getAttribute('data-review-id');
+                console.log('Opening report modal for reviewId:', reviewId);
+                reportReviewId.value = reviewId;
+                
+                reportForm.reset();
+                otherReasonTextarea.style.display = 'none';
+            });
+        });
+
+        document.querySelectorAll('input[name="reason"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'Khác') {
+                    otherReasonTextarea.style.display = 'block';
+                    otherReasonTextarea.setAttribute('required', 'required');
                 } else {
-                    otherReasonTextarea.style.display = "none";
-                    otherReasonTextarea.value = "";
+                    otherReasonTextarea.style.display = 'none';
+                    otherReasonTextarea.removeAttribute('required');
+                    otherReasonTextarea.value = '';
                 }
             });
         });
-        document.getElementById("submitReport").addEventListener("click", function () {
-            const selectedReason = document.querySelector('input[name="reportReason"]:checked');
-            const reportModal = bootstrap.Modal.getInstance(document.getElementById("reportModal"));
-            const errorAlertModal = new bootstrap.Modal(document.getElementById("errorAlertModal"));
-            const errorAlertMessage = document.getElementById("errorAlertMessage");
-            const customAlertModal = new bootstrap.Modal(document.getElementById("customAlertModal"));
-            const customAlertMessage = document.getElementById("customAlertMessage");
-            const modalFooter = document.querySelector("#customAlertModal .modal-footer");
+
+        reportForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const reviewId = reportReviewId.value;
+            const selectedReason = document.querySelector('input[name="reason"]:checked');
+            const otherReason = otherReasonTextarea.value.trim();
+
+            console.log('Submitting report:', {
+                reviewId: reviewId,
+                reason: selectedReason ? selectedReason.value : null,
+                otherReason: otherReason
+            });
+
+            // Hiển thị thông báo lỗi
+            const errorAlertModal = new bootstrap.Modal(document.getElementById('errorAlertModal'));
+            const errorAlertMessage = document.getElementById('errorAlertMessage');
+
+            if (!reviewId) {
+                errorAlertMessage.textContent = 'Lỗi: Không xác định được review để báo cáo!';
+                errorAlertModal.show();
+                return;
+            }
+
             if (!selectedReason) {
-                errorAlertMessage.textContent = "Vui lòng chọn một lý do trước khi gửi báo cáo!";
+                errorAlertMessage.textContent = 'Vui lòng chọn một lý do trước khi gửi báo cáo!';
                 errorAlertModal.show();
                 return;
             }
-            if (selectedReason.value === "Khác" && !otherReasonTextarea.value.trim()) {
-                errorAlertMessage.textContent = "Vui lòng nhập lý do cụ thể khi chọn 'Khác'!";
+
+            if (selectedReason.value === 'Khác' && !otherReason) {
+                errorAlertMessage.textContent = 'Vui lòng nhập lý do cụ thể khi chọn "Khác"!';
                 errorAlertModal.show();
                 return;
             }
-            customAlertMessage.textContent = "Báo cáo đã được gửi thành công!";
-            modalFooter.innerHTML = '<button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>';
-            customAlertModal.show();
+
+            // Nếu mọi thứ hợp lệ, submit form
+            this.submit();
+            
+            // Hiển thị thông báo thành công
+            const reportModal = bootstrap.Modal.getInstance(document.getElementById('reportModal'));
             reportModal.hide();
-            otherReasonTextarea.style.display = "none";
-            otherReasonTextarea.value = "";
-            document.querySelector('input[name="reportReason"]:checked').checked = false;
+            
+            // Hiển thị alert thành công
+            const customAlertModal = new bootstrap.Modal(document.getElementById('customAlertModal'));
+            document.getElementById('customAlertMessage').textContent = 'Báo cáo đã được gửi thành công!';
+            document.querySelector('#customAlertModal .modal-footer').innerHTML = 
+                '<button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>';
+            customAlertModal.show();
+            
+            // Reset form sau khi đóng alert
             customAlertModal._element.addEventListener('hidden.bs.modal', function () {
-                modalFooter.innerHTML = `
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary confirm-delete">OK</button>
-                `;
+                reportForm.reset();
+                otherReasonTextarea.style.display = 'none';
+                document.querySelector('#customAlertModal .modal-footer').innerHTML = 
+                    '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>' +
+                    '<button type="button" class="btn btn-primary confirm-delete">OK</button>';
             }, { once: true });
         });
+
         const starRating = document.querySelector(".star-rating");
         const stars = starRating.querySelectorAll(".star");
         stars.forEach(star => {

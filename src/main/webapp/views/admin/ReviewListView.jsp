@@ -255,15 +255,23 @@
                                         </c:choose>
                                     </td>
                                     <td class="px-4 py-3 action-column">
+                                        <input type="hidden" name="reviewIdForRow" value="${review.id}" />
                                         <div class="flex items-center space-x-4 text-sm">
-                                            <button x-show="userRole === 'Quản lý'"
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                            <button type="button" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray reply-btn"
                                                     aria-label="Reply" title="Phản hồi đánh giá">
                                                 Phản hồi
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
+                                <c:if test="${not empty replyMap[review.id]}">
+                                <tr>
+                                    <td colspan="9" style="background:#f6f6f6; color:#333; padding-left:40px;">
+                                        <b>Phản hồi quản lý:</b> ${replyMap[review.id].content}
+                                        <span style="color:#888; font-size:12px; margin-left:16px;">(${replyMap[review.id].createDate})</span>
+                                    </td>
+                                </tr>
+                                </c:if>
                             </c:forEach>
                             </tbody>
                         </table>
@@ -278,29 +286,33 @@
 <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="replyModalLabel">Phản hồi đánh giá</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Nội dung phản hồi</span>
-                    <textarea
-                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-textarea"
-                            rows="4" placeholder="Nhập nội dung phản hồi"></textarea>
-                </label>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary">Gửi</button>
-            </div>
+            <form id="replyForm" method="post" action="${pageContext.request.contextPath}/admin/reply">
+                <input type="hidden" name="reviewId" id="replyReviewId" value="" />
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="replyModalLabel">Phản hồi đánh giá</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Nội dung phản hồi</span>
+                        <textarea name="content" id="replyContent" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-textarea" rows="4" placeholder="Nhập nội dung phản hồi" required></textarea>
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Gửi</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script>
-    document.querySelectorAll('[aria-label="Reply"]').forEach(button => {
-        button.addEventListener('click', () => {
+    document.querySelectorAll('.reply-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const reviewId = this.closest('tr').querySelector('input[name="reviewIdForRow"]').value;
+            document.getElementById('replyReviewId').value = reviewId;
+            document.getElementById('replyContent').value = '';
             const replyModal = new bootstrap.Modal(document.getElementById('replyModal'));
             replyModal.show();
         });

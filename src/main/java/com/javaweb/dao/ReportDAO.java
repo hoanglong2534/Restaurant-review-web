@@ -122,25 +122,16 @@ public class ReportDAO {
         return false;
     }
 
-    public boolean deleteReviewById(int reviewId) {
-        String query = "DELETE FROM review WHERE id = ?";
+    public void addReport(Report report) {
+        String query = "INSERT INTO report (reviewId, userId, reason, createDate) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, reviewId);
-            return ps.executeUpdate() > 0;
+            ps.setInt(1, report.getReviewId());
+            ps.setInt(2, report.getUserId());
+            ps.setString(3, report.getReason());
+            ps.setDate(4, report.getCreateDate());
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
-    }
-
-    public boolean deleteCommentsByReviewId(int reviewId) {
-        String query = "DELETE FROM comment WHERE reviewId = ?";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, reviewId);
-            return ps.executeUpdate() >= 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 } 

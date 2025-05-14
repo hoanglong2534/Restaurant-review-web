@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     com.javaweb.model.User user = (com.javaweb.model.User) session.getAttribute("user");
     if (user == null || !"admin".equals(user.getRole())) {
@@ -164,39 +165,35 @@
       <div class="container-fluid px-4">
         <!-- Search section -->
         <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300" style="margin: 10px;">
-          Tìm kiếm báo cáo
+          Lọc báo cáo
         </h4>
-
-        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-          <!-- Row 1: Dish name + From date + To date -->
-          <div class="flex flex-col sm:flex-row gap-6 mb-6">
-            <!-- Dish name -->
-            <div class="flex-1 px-2">
-              <label class="block text-sm">
-                <span class="text-gray-700 dark:text-gray-400">Tên món ăn</span>
-                <input
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                        placeholder="Ví dụ: Cơm chiên dương châu" />
-              </label>
-            </div>
-            <!-- From date -->
-            <div class="flex-1 px-2">
-              <label class="block text-sm">
-                <span class="text-gray-700 dark:text-gray-400">Từ ngày</span>
-                <input type="date"
-                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
-              </label>
-            </div>
-            <!-- To date -->
-            <div class="flex-1 px-2">
-              <label class="block text-sm">
-                <span class="text-gray-700 dark:text-gray-400">Đến ngày</span>
-                <input type="date"
-                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
-              </label>
+        <form method="get" action="">
+          <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+            <div class="flex flex-col sm:flex-row gap-6 mb-6">
+              <div class="flex-1 px-2">
+                <label class="block text-sm">
+                  <span class="text-gray-700 dark:text-gray-400">Tên món ăn</span>
+                  <input name="dishName" value="${param.dishName}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="Ví dụ: Cơm chiên dương châu" />
+                </label>
+              </div>
+              <div class="flex-1 px-2">
+                <label class="block text-sm">
+                  <span class="text-gray-700 dark:text-gray-400">Từ ngày</span>
+                  <input name="fromDate" value="${param.fromDate}" type="date" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                </label>
+              </div>
+              <div class="flex-1 px-2">
+                <label class="block text-sm">
+                  <span class="text-gray-700 dark:text-gray-400">Đến ngày</span>
+                  <input name="toDate" value="${param.toDate}" type="date" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                </label>
+              </div>
+              <div class="flex-1 px-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary export-btn w-100 mt-4">Lọc</button>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
 
         <!-- Report list -->
         <div class="mb-4">
@@ -224,156 +221,30 @@
               </tr>
               </thead>
               <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-              <tr class="text-gray-700 dark:text-gray-400">
-                <td class="px-4 py-3 text-sm">1</td>
-                <td class="px-4 py-3 text-sm dish-column">Cơm chiên dương châu</td>
-                <td class="px-4 py-3 user-column">
-                  <div class="flex items-center text-sm">
-                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                      <img class="object-cover w-full h-full rounded-full"
-                           src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                           alt="" loading="lazy" />
-                      <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                    </div>
-                    <div>
-                      <p>Nguyễn Thị D</p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-4 py-3 user-column">
-                  <div class="flex items-center text-sm">
-                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                      <img class="object-cover w-full h-full rounded-full"
-                           src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max"
-                           alt="" loading="lazy" />
-                      <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                    </div>
-                    <div>
-                      <p>Phạm Văn E</p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-4 py-3 text-sm content-column">
-                  Món ăn ngon, nhiều tôm và thịt, nhưng hơi nhiều dầu.
-                </td>
-                <td class="px-4 py-3 text-sm image-url">
-                  <a href="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" target="_blank">Link</a>
-                </td>
-                <td class="px-4 py-3 text-sm report-content-column">
-                  Đánh giá chứa nội dung không phù hợp, có từ ngữ xúc phạm.
-                </td>
-                <td class="px-4 py-3 text-sm">25-04-2025</td>
-                <td class="px-4 py-3 action-column">
-                  <div class="flex items-center space-x-4 text-sm">
-                    <button x-show="userRole === 'Quản lý'"
-                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-red-400 focus:outline-none focus:shadow-outline-gray"
-                            aria-label="Delete" title="Xóa đánh giá"
-                            data-bs-toggle="modal" data-bs-target="#deleteModal">
-                      Xóa
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr class="text-gray-700 dark:text-gray-400">
-                <td class="px-4 py-3 text-sm">2</td>
-                <td class="px-4 py-3 text-sm dish-column">Phở bò</td>
-                <td class="px-4 py-3 user-column">
-                  <div class="flex items-center text-sm">
-                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                      <img class="object-cover w-full h-full rounded-full"
-                           src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&facepad=3&fit=facearea&s=707b9c33066bf8808c934c8ab394dff6"
-                           alt="" loading="lazy" />
-                      <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                    </div>
-                    <div>
-                      <p>Trần Thị B</p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-4 py-3 user-column">
-                  <div class="flex items-center text-sm">
-                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                      <img class="object-cover w-full h-full rounded-full"
-                           src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max"
-                           alt="" loading="lazy" />
-                      <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                    </div>
-                    <div>
-                      <p>Hoàng Văn F</p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-4 py-3 text-sm content-column">
-                  Nước dùng thơm, thịt bò mềm, nhưng bánh phở hơi dính.
-                </td>
-                <td class="px-4 py-3 text-sm image-url">
-                  Không có ảnh
-                </td>
-                <td class="px-4 py-3 text-sm report-content-column">
-                  Đánh giá có dấu hiệu spam, lặp lại nội dung vô nghĩa.
-                </td>
-                <td class="px-4 py-3 text-sm">19-04-2025</td>
-                <td class="px-4 py-3 action-column">
-                  <div class="flex items-center space-x-4 text-sm">
-                    <button x-show="userRole === 'Quản lý'"
-                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-red-400 focus:outline-none focus:shadow-outline-gray"
-                            aria-label="Delete" title="Xóa đánh giá"
-                            data-bs-toggle="modal" data-bs-target="#deleteModal">
-                      Xóa
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr class="text-gray-700 dark:text-gray-400">
-                <td class="px-4 py-3 text-sm">3</td>
-                <td class="px-4 py-3 text-sm dish-column">Bánh mì pate</td>
-                <td class="px-4 py-3 user-column">
-                  <div class="flex items-center text-sm">
-                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                      <img class="object-cover w-full h-full rounded-full"
-                           src="https://images.unsplash.com/photo-1551069613-1904dbdcda11?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                           alt="" loading="lazy" />
-                      <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                    </div>
-                    <div>
-                      <p>Lê Văn C</p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-4 py-3 user-column">
-                  <div class="flex items-center text-sm">
-                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                      <img class="object-cover w-full h-full rounded-full"
-                           src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max"
-                           alt="" loading="lazy" />
-                      <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                    </div>
-                    <div>
-                      <p>Nguyễn Thị G</p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-4 py-3 text-sm content-column">
-                  Bánh mì giòn, pate đậm đà, nhưng rau hơi ít.
-                </td>
-                <td class="px-4 py-3 text-sm image-url">
-                  <a href="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" target="_blank">Link</a>
-                </td>
-                <td class="px-4 py-3 text-sm report-content-column">
-                  Đánh giá chứa liên kết quảng cáo không liên quan.
-                </td>
-                <td class="px-4 py-3 text-sm">18-04-2025</td>
-                <td class="px-4 py-3 action-column">
-                  <div class="flex items-center space-x-4 text-sm">
-                    <button x-show="userRole === 'Quản lý'"
-                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-red-400 focus:outline-none focus:shadow-outline-gray"
-                            aria-label="Delete" title="Xóa đánh giá"
-                            data-bs-toggle="modal" data-bs-target="#deleteModal">
-                      Xóa
-                    </button>
-                  </div>
-                </td>
-              </tr>
+              <c:forEach var="report" items="${reports}" varStatus="loop">
+                <tr class="text-gray-700 dark:text-gray-400">
+                  <td class="px-4 py-3 text-sm">${loop.index + 1}</td>
+                  <td class="px-4 py-3 text-sm dish-column">${report.dishName}</td>
+                  <td class="px-4 py-3 user-column">${report.reviewerName}</td>
+                  <td class="px-4 py-3 user-column">${report.reporterName}</td>
+                  <td class="px-4 py-3 text-sm content-column">${report.reviewContent}</td>
+                  <td class="px-4 py-3 text-sm image-url">
+                    <c:if test="${not empty report.reviewImage}">
+                        <a href="${report.reviewImage}" target="_blank">Link</a>
+                    </c:if>
+                    <c:if test="${empty report.reviewImage}">-</c:if>
+                  </td>
+                  <td class="px-4 py-3 text-sm report-content-column">${report.reason}</td>
+                  <td class="px-4 py-3 text-sm">${report.createDate}</td>
+                  <td class="px-4 py-3 action-column">
+                    <form method="get" action="/admin/list-report" style="display:inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa đánh giá này?');">
+                      <input type="hidden" name="action" value="delete" />
+                      <input type="hidden" name="id" value="${report.id}" />
+                      <button type="submit" class="btn btn-link text-danger p-0" style="text-decoration: none;">Xóa</button>
+                    </form>
+                  </td>
+                </tr>
+              </c:forEach>
               </tbody>
             </table>
           </div>

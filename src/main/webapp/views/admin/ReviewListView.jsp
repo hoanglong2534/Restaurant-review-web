@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     com.javaweb.model.User user = (com.javaweb.model.User) session.getAttribute("user");
 %>
@@ -150,67 +151,58 @@
                     Lọc đánh giá
                 </h4>
 
-                <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                    <!-- Row 1: Dish name + Stars + Reply status -->
-                    <div class="flex flex-col sm:flex-row gap-6 mb-6">
-                        <!-- Dish name -->
-                        <div class="flex-1 px-2">
-                            <label class="block text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">Tên món ăn</span>
-                                <input
-                                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                        placeholder="Ví dụ: Cơm chiên dương châu" />
-                            </label>
+                <form method="get" action="">
+                    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                        <div class="flex flex-col sm:flex-row gap-6 mb-6">
+                            <div class="flex-1 px-2">
+                                <label class="block text-sm">
+                                    <span class="text-gray-700 dark:text-gray-400">Tên món ăn</span>
+                                    <input name="dishName" value="${param.dishName}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="Ví dụ: Cơm chiên dương châu" />
+                                </label>
+                            </div>
+                            <div class="flex-1 px-2">
+                                <label class="block text-sm">
+                                    <span class="text-gray-700 dark:text-gray-400">Số sao</span>
+                                    <select name="star" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                        <option value="">Tất cả</option>
+                                        <option value="1" ${param.star == '1' ? 'selected' : ''}>1 sao</option>
+                                        <option value="2" ${param.star == '2' ? 'selected' : ''}>2 sao</option>
+                                        <option value="3" ${param.star == '3' ? 'selected' : ''}>3 sao</option>
+                                        <option value="4" ${param.star == '4' ? 'selected' : ''}>4 sao</option>
+                                        <option value="5" ${param.star == '5' ? 'selected' : ''}>5 sao</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="flex-1 px-2">
+                                <label class="block text-sm">
+                                    <span class="text-gray-700 dark:text-gray-400">Trạng thái phản hồi</span>
+                                    <select name="status" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                        <option value="">Tất cả</option>
+                                        <option value="daphanhoi" ${param.status == 'daphanhoi' ? 'selected' : ''}>Đã phản hồi</option>
+                                        <option value="chuaphanhoi" ${param.status == 'chuaphanhoi' ? 'selected' : ''}>Chưa phản hồi</option>
+                                    </select>
+                                </label>
+                            </div>
                         </div>
-                        <!-- Stars -->
-                        <div class="flex-1 px-2">
-                            <label class="block text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">Số sao</span>
-                                <select
-                                        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option>Tất cả</option>
-                                    <option>1 sao</option>
-                                    <option>2 sao</option>
-                                    <option>3 sao</option>
-                                    <option>4 sao</option>
-                                    <option>5 sao</option>
-                                </select>
-                            </label>
-                        </div>
-                        <!-- Reply status -->
-                        <div class="flex-1 px-2">
-                            <label class="block text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">Trạng thái phản hồi</span>
-                                <select
-                                        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option>Tất cả</option>
-                                    <option>Chưa phản hồi</option>
-                                    <option>Đã phản hồi</option>
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Row 2: From date + To date -->
-                    <div class="flex flex-col sm:flex-row gap-6 mb-6">
-                        <!-- From date -->
-                        <div class="flex-1 px-2">
-                            <label class="block text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">Từ ngày</span>
-                                <input type="date"
-                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
-                            </label>
-                        </div>
-                        <!-- To date -->
-                        <div class="flex-1 px-2">
-                            <label class="block text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">Đến ngày</span>
-                                <input type="date"
-                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
-                            </label>
+                        <div class="flex flex-col sm:flex-row gap-6 mb-6 align-items-center">
+                            <div class="flex-1 px-2">
+                                <label class="block text-sm">
+                                    <span class="text-gray-700 dark:text-gray-400">Từ ngày</span>
+                                    <input name="fromDate" value="${param.fromDate}" type="date" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                                </label>
+                            </div>
+                            <div class="flex-1 px-2">
+                                <label class="block text-sm">
+                                    <span class="text-gray-700 dark:text-gray-400">Đến ngày</span>
+                                    <input name="toDate" value="${param.toDate}" type="date" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                                </label>
+                            </div>
+                            <div class="flex-1 px-2 d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary export-btn w-100 mt-4">Lọc</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
 
                 <!-- Review list -->
                 <div class="mb-4">
@@ -238,123 +230,41 @@
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                            <tr class="text-gray-700 dark:text-gray-400">
-                                <td class="px-4 py-3 text-sm">1</td>
-                                <td class="px-4 py-3 text-sm dish-column">Cơm chiên dương châu</td>
-                                <td class="px-4 py-3 customer-column">
-                                    <div class="flex items-center text-sm">
-                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                            <img class="object-cover w-full h-full rounded-full"
-                                                 src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                                                 alt="" loading="lazy" />
-                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                            <c:forEach var="review" items="${reviews}" varStatus="loop">
+                                <tr class="text-gray-700 dark:text-gray-400">
+                                    <td class="px-4 py-3 text-sm">${loop.index + 1}</td>
+                                    <td class="px-4 py-3 text-sm dish-column">${review.dishName}</td>
+                                    <td class="px-4 py-3 customer-column">${review.userFullName}</td>
+                                    <td class="px-4 py-3 text-sm content-column">${review.content}</td>
+                                    <td class="px-4 py-3 text-sm image-url">
+                                        <c:choose>
+                                            <c:when test="${not empty review.image}">
+                                                <a href="${review.image}" target="_blank">Link</a>
+                                            </c:when>
+                                            <c:otherwise>-</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">${review.star} sao</td>
+                                    <td class="px-4 py-3 text-sm">${review.createDate}</td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <c:choose>
+                                            <c:when test="${not empty review.status}">
+                                                ${review.status}
+                                            </c:when>
+                                            <c:otherwise>null</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td class="px-4 py-3 action-column">
+                                        <div class="flex items-center space-x-4 text-sm">
+                                            <button x-show="userRole === 'Quản lý'"
+                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                    aria-label="Reply" title="Phản hồi đánh giá">
+                                                Phản hồi
+                                            </button>
                                         </div>
-                                        <div>
-                                            <p>Nguyễn Thị D</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-4 py-3 text-sm content-column">
-                                    Món ăn ngon, nhiều tôm và thịt, nhưng hơi nhiều dầu.
-                                </td>
-                                <td class="px-4 py-3 text-sm image-url">
-                                    <a href="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" target="_blank">Link</a>
-                                </td>
-                                <td class="px-4 py-3 text-sm">4 sao</td>
-                                <td class="px-4 py-3 text-sm">25-04-2025</td>
-                                <td class="px-4 py-3 text-sm">
-                                    <span class="px-2 py-1 font-semibold text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
-                                        Chưa phản hồi
-                                    </span>
-                                </td>
-                                <td class="px-4 py-3 action-column">
-                                    <div class="flex items-center space-x-4 text-sm">
-                                        <button x-show="userRole === 'Quản lý'"
-                                                class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                aria-label="Reply" title="Phản hồi đánh giá">
-                                            Phản hồi
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="text-gray-700 dark:text-gray-400">
-                                <td class="px-4 py-3 text-sm">2</td>
-                                <td class="px-4 py-3 text-sm dish-column">Phở bò</td>
-                                <td class="px-4 py-3 customer-column">
-                                    <div class="flex items-center text-sm">
-                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                            <img class="object-cover w-full h-full rounded-full"
-                                                 src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&facepad=3&fit=facearea&s=707b9c33066bf8808c934c8ab394dff6"
-                                                 alt="" loading="lazy" />
-                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                        </div>
-                                        <div>
-                                            <p>Trần Thị B</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-4 py-3 text-sm content-column">
-                                    Nước dùng thơm, thịt bò mềm, nhưng bánh phở hơi dính.
-                                </td>
-                                <td class="px-4 py-3 text-sm image-url">
-                                    Không có ảnh
-                                </td>
-                                <td class="px-4 py-3 text-sm">5 sao</td>
-                                <td class="px-4 py-3 text-sm">19-04-2025</td>
-                                <td class="px-4 py-3 text-sm">
-                                    <span class="px-2 py-1 font-semibold text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                                        Đã phản hồi
-                                    </span>
-                                </td>
-                                <td class="px-4 py-3 action-column">
-                                    <div class="flex items-center space-x-4 text-sm">
-                                        <button x-show="userRole === 'Quản lý'"
-                                                class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                aria-label="Reply" title="Phản hồi đánh giá">
-                                            Phản hồi
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="text-gray-700 dark:text-gray-400">
-                                <td class="px-4 py-3 text-sm">3</td>
-                                <td class="px-4 py-3 text-sm dish-column">Bánh mì pate</td>
-                                <td class="px-4 py-3 customer-column">
-                                    <div class="flex items-center text-sm">
-                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                                            <img class="object-cover w-full h-full rounded-full"
-                                                 src="https://images.unsplash.com/photo-1551069613-1904dbdcda11?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                                                 alt="" loading="lazy" />
-                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                        </div>
-                                        <div>
-                                            <p>Lê Văn C</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-4 py-3 text-sm content-column">
-                                    Bánh mì giòn, pate đậm đà, nhưng rau hơi ít.
-                                </td>
-                                <td class="px-4 py-3 text-sm image-url">
-                                    <a href="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" target="_blank">Link</a>
-                                </td>
-                                <td class="px-4 py-3 text-sm">3 sao</td>
-                                <td class="px-4 py-3 text-sm">18-04-2025</td>
-                                <td class="px-4 py-3 text-sm">
-                                    <span class="px-2 py-1 font-semibold text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
-                                        Chưa phản hồi
-                                    </span>
-                                </td>
-                                <td class="px-4 py-3 action-column">
-                                    <div class="flex items-center space-x-4 text-sm">
-                                        <button x-show="userRole === 'Quản lý'"
-                                                class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                aria-label="Reply" title="Phản hồi đánh giá">
-                                            Phản hồi
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
